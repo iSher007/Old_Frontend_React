@@ -371,11 +371,11 @@ const ResultsPdf = () => {
   const renderSelectedContent = () => {
     switch (selectedOption) {
       case "content1":
-        return renderContent("REPORT 1: EXPLORE YOUR PERSONALITY", "REPORT 2: BEST CAREER FIELDS");
+        return renderContent("EXPLORE YOUR PERSONALITY", "BEST CAREER FIELDS");
       case "content2":
-        return renderContent("REPORT 2: BEST CAREER FIELDS", "REPORT 3: TOP 5 PROFESSIONS");
+        return renderContent("BEST CAREER FIELDS", "TOP 5 PROFESSIONS");
       case "content3":
-        return renderContent("REPORT 3: TOP 5 PROFESSIONS");
+        return renderContent("TOP 5 PROFESSIONS");
       default:
         return null;
     }
