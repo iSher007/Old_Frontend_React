@@ -1,0 +1,113 @@
+{/* <div className="slideshow-container">
+  <div className="slideshow-content">
+    <img src={images[currentImage]} className="slideshow-image" alt="Slideshow" />
+    <div className="slide-text">
+      {slideTexts[currentImage].map((text, idx) => (
+      <p key={idx}>{text}</p>
+      ))}
+    </div>
+  </div>
+  <div className="dots-container">
+    {images.map((_, index) => (
+    <span key={index} className={`dot ${index===currentImage ? 'active' : '' }`} onClick={()=>
+      handleDotClick(index)}
+      ></span>
+    ))}
+  </div>
+</div> */}
+
+
+<!-- const [currentImage, setCurrentImage] = useState(0);
+const images = [image1, image2, image3]; // Replace image1, image2, image3 with your actual image URLs
+
+const slideTexts = [
+  ['Discover Your Ideal Profession', 'Our center provides comprehensive career assessments and personalized guidance'],
+  ['Craft Your Optimal Career Path', 'We offer career planning services that empower you to design your career path.'],
+  ['Begin Your Journey to Success', 'Kickstart your journey to success with our center resources and support.']
+];
+
+const handleDotClick = (index) => {
+  setCurrentImage(index);
+};
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+  }, 10000);
+
+  return () => {
+    clearInterval(interval);
+  };
+}, [images.length]); -->
+
+
+<h1>Personalized Suggestions</h1>
+<p>Discover your perfect profession with our personalized recommendations that leverage your unique strengths and
+  passions. Our platform combines insightful personal strengths test results with a cutting-edge algorithm to curate a
+  tailored list of careers just for you. Unveil a rewarding and fulfilling future where you can thrive doing what you
+  love the most!</p>
+
+</div>
+<img className="img" src={resluts} alt="results" />
+</div>
+<div className="section">
+  <img className="img" src={resultspdf} alt="results pdf" />
+  <div className="description">
+    <h1>In-depth Analysis</h1>
+    <p>Discover your perfect career path with our platform's comprehensive personality assessments. Through in-depth
+      analysis and cutting-edge algorithms, we match you with professions that align with your unique strengths and
+      passions, empowering you to make informed decisions for a fulfilling future.</p>
+  </div>
+</div>
+<div className="section">
+  <div className="description">
+    <h1>AI Assistant</h1>
+    <p>
+      Are you facing a challenging decision? Don't worry, our chatbot is here to provide instant guidance and support.
+      Our AI-powered assistant leverages the latest technology to offer personalized recommendations tailored to your
+      unique needs and preferences. Join thousands of satisfied users who have already benefited from our Friendly
+      Assistant's support. Embrace a more confident and informed decision-making process today! Struggling with a
+      decision? Our chatbot is here to help!
+    </p>
+
+
+
+    <!-- HTML !-->
+    <button class="button-63" role="button">Button 63</button>
+
+    /* CSS */
+    .button-63 {
+    align-items: center;
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-family: Phantomsans, sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    line-height: 1em;
+    max-width: 100%;
+    min-width: 140px;
+    padding: 19px 24px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    }
+
+    .button-63:active,
+    .button-63:hover {
+    outline: 0;
+    }
+
+    @media (min-width: 768px) {
+    .button-63 {
+    font-size: 24px;
+    min-width: 196px;
+    }
+    }
