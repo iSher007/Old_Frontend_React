@@ -391,7 +391,7 @@ const ResultsPdf = () => {
           Download All
         </button>
         <Link to={`/results/${pdfId}`}>
-          <button type='submit' className='results-button'>Go Back</button>
+          <button type='submit' className='results-button'>Get Back</button>
         </Link>
 
       </div>
@@ -458,7 +458,7 @@ const Chatbot = () => {
       <div className="buttons-container1">
 
         <Link to={`/results_pdf/${pdfId}`}>
-          <button type='submit' className='results-button'>Go Back</button>
+          <button type='submit' className='results-button'>Get Back</button>
         </Link>
 
       </div>
