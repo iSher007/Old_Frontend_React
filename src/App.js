@@ -83,7 +83,7 @@ const Upload = () => {
 
     const token = localStorage.getItem('access_token');
 
-    axios.post('https://fastapi-production-fffa.up.railway.app/Gallup/pdf', formData, {
+    axios.post('http://localhost:8000/Gallup/pdf', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -196,7 +196,7 @@ const Results = () => {
       const token = localStorage.getItem('access_token');
 
       axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
+        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -217,7 +217,129 @@ const Results = () => {
 
   const handleOpenPDF = () => {
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+      .then((response) => {
+        window.open(response.data, '_blank');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    if (filterTerm === '') {
+      setFilteredData(tableData);
+    } else {
+      const filtered = tableData.filter(row => row.Field === filterTerm);
+      setFilteredData(filtered);
+    }
+  }, [filterTerm, tableData]);
+
+  const handleFilterChange = (e) => {
+    setFilterTerm(e.target.value);
+  }
+
+  // Get a unique list of 'Field' values
+  const fieldOptions = Array.isArray(tableData) ? [...new Set(tableData.map(item => item.Field))] : [];
+
+  return (
+    <div className="results-container">
+      <div className="buttons-container">
+        <Link to={`/results_new/${pdfId}`}>
+          <button className='results-button'>Next Thing</button>
+        </Link>
+        <button onClick={handleOpenPDF} className='results-button'>
+          Download All
+        </button>
+      </div>
+      <div className="results-main">
+        <h1>Best Fit Career</h1>
+        <div>
+          Select field
+          <select value={filterTerm} onChange={handleFilterChange} className="filter-input">
+
+            <option value="">All</option>
+
+            {fieldOptions.map(field => <option value={field}>{field}</option>)}
+          </select>
+        </div>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            {Array.isArray(filteredData) && filteredData.length > 0 ? (
+              <table className="results-table">
+                <thead>
+                  <tr>
+                    <th>Place</th>
+                    <th>Field</th>
+                    <th>Subfield</th>
+                    <th>Profession</th>
+                    <th>Fit Percentage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.map((row, index) => (
+                    <tr key={index}>
+                      <td>{row.Place}</td>
+                      <td>{row.Field}</td>
+                      <td>{row.Subfield}</td>
+                      <td>{row.Professions}</td>
+                      <td>{row['Percentage fitting']}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No table data available.</p>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const Results_new = () => {
+  const { pdfId } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [tableData, setTableData] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
+  const [filterTerm, setFilterTerm] = useState('');
+
+  useEffect(() => {
+    const fetchTableData = () => {
+      setIsLoading(true);
+
+      const token = localStorage.getItem('access_token');
+
+      axios
+        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity_new`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          const data = response.data;
+          setTableData(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setIsLoading(false);
+        });
+    };
+
+    fetchTableData();
+  }, [pdfId]);
+
+  const handleOpenPDF = () => {
+    axios
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download_new`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -277,7 +399,7 @@ const Results = () => {
                   <tr>
                     <th>Place</th>
                     <th>Field</th>
-                    <th>Subfield</th>
+                    <th>Year of appearance</th>
                     <th>Profession</th>
                     <th>Fit Percentage</th>
                   </tr>
@@ -287,7 +409,7 @@ const Results = () => {
                     <tr key={index}>
                       <td>{row.Place}</td>
                       <td>{row.Field}</td>
-                      <td>{row.Subfield}</td>
+                      <td>{row['Year of appearance']}</td>
                       <td>{row.Professions}</td>
                       <td>{row['Percentage fitting']}</td>
                     </tr>
@@ -304,6 +426,8 @@ const Results = () => {
   );
 };
 
+
+
 const ResultsPdf = () => {
   const { pdfId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -318,7 +442,7 @@ const ResultsPdf = () => {
       const token = localStorage.getItem('access_token');
 
       axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments`, {
+        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -339,7 +463,7 @@ const ResultsPdf = () => {
 
   const handleOpenPDF = () => {
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments_download`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments_download`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -431,7 +555,7 @@ const Chatbot = () => {
   const sendMessage = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_bot`, {
+      const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_bot`, {
         params: {
           bot_question: message,
         },
@@ -530,7 +654,7 @@ const Home = () => {
     data.append('username', email);
     data.append('password', password);
 
-    axios.post('https://fastapi-production-fffa.up.railway.app/auth/users/tokens', data)
+    axios.post('http://localhost:8000/auth/users/tokens', data)
       .then((response) => {
         const { access_token } = response.data;
         localStorage.setItem('access_token', access_token);
@@ -790,6 +914,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/results/:pdfId" element={<Results />} />
+          <Route path="/results_new/:pdfId" element={<Results_new />} />
           <Route path="/results_pdf/:pdfId" element={<ResultsPdf />} />
           <Route path="/chatbot/:pdfId" element={<Chatbot />} />
         </Routes>
