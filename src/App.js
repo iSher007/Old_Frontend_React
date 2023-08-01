@@ -1,10 +1,16 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { Link, Route, BrowserRouter as Router, Routes, useNavigate, useParams } from 'react-router-dom';
+import ReactXarrow, { Xwrapper } from "react-xarrows";
 import './App.css';
 import resultspdf from './ResultsPDF.jpg';
+import binoculars from './binoculars-svgrepo-com.svg';
 import chatbot from './chatbot.png';
+import question from './faq-svgrepo-com.svg';
+import report from './file-svgrepo-com.svg';
+import star from './rating-svgrepo-com.svg';
 import resluts from './results.jpg';
+import gold from './sales-performance-svgrepo-com.svg';
 import starting from './starting.gif';
 
 
@@ -77,7 +83,7 @@ const Upload = () => {
 
     const token = localStorage.getItem('access_token');
 
-    axios.post('https://fastapi-production-fffa.up.railway.app/Gallup/pdf', formData, {
+    axios.post('http://localhost:8000/Gallup/pdf', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -190,7 +196,7 @@ const Results = () => {
       const token = localStorage.getItem('access_token');
 
       axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
+        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -211,7 +217,7 @@ const Results = () => {
 
   const handleOpenPDF = () => {
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -271,6 +277,7 @@ const Results = () => {
                   <tr>
                     <th>Place</th>
                     <th>Field</th>
+                    <th>Subfield</th>
                     <th>Profession</th>
                     <th>Fit Percentage</th>
                   </tr>
@@ -280,6 +287,7 @@ const Results = () => {
                     <tr key={index}>
                       <td>{row.Place}</td>
                       <td>{row.Field}</td>
+                      <td>{row.Subfield}</td>
                       <td>{row.Professions}</td>
                       <td>{row['Percentage fitting']}</td>
                     </tr>
@@ -310,7 +318,7 @@ const ResultsPdf = () => {
       const token = localStorage.getItem('access_token');
 
       axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments`, {
+        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -331,7 +339,7 @@ const ResultsPdf = () => {
 
   const handleOpenPDF = () => {
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments_download`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments_download`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -423,7 +431,7 @@ const Chatbot = () => {
   const sendMessage = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_bot`, {
+      const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_bot`, {
         params: {
           bot_question: message,
         },
@@ -499,7 +507,16 @@ const Chatbot = () => {
 
 const Home = () => {
   const Home3Ref = useRef(null);
+  const KeyFeaturesRef = useRef(null);
+  const Startbutton = useRef(null);
+  const Description1 = useRef(null);
+  const Description2 = useRef(null);
 
+  const [isVisibleHome3, setIsVisibleHome3] = useState(false);
+  const [isVisibleKeyFeatures, setIsVisibleKeyFeatures] = useState(false);
+  const [isVisibleStartbutton, setIsVisibleStartbutton] = useState(false);
+  const [isVisibleDescription1, setIsVisibleDescription1] = useState(false);
+  const [isVisibleDescription2, setIsVisibleDescription2] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -513,7 +530,7 @@ const Home = () => {
     data.append('username', email);
     data.append('password', password);
 
-    axios.post('https://fastapi-production-fffa.up.railway.app/auth/users/tokens', data)
+    axios.post('http://localhost:8000/auth/users/tokens', data)
       .then((response) => {
         const { access_token } = response.data;
         localStorage.setItem('access_token', access_token);
@@ -525,6 +542,32 @@ const Home = () => {
       });
   };
 
+  const checkVisibility = (ref, setIsVisible) => {
+    if (!ref.current) {
+      return;
+    }
+    const rect = ref.current.getBoundingClientRect();
+    if (rect.top <= window.innerHeight && rect.bottom) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    const checkScroll = () => {
+      checkVisibility(Home3Ref, setIsVisibleHome3);
+      checkVisibility(KeyFeaturesRef, setIsVisibleKeyFeatures);
+      checkVisibility(Startbutton, setIsVisibleStartbutton)
+      checkVisibility(Description1, setIsVisibleDescription1)
+      checkVisibility(Description2, setIsVisibleDescription2)
+    };
+
+    window.addEventListener('scroll', checkScroll);
+    return () => window.removeEventListener('scroll', checkScroll);
+  }, []);
+
+
   useEffect(() => {
     if (redirect) {
       navigate('/upload');
@@ -533,69 +576,198 @@ const Home = () => {
 
   return (
     <div className="container">
-      <div className="Home1">
-        <h1 className="logo">PathFinder</h1>
-        <div className="streamingtext-wrapper">
-          <h2 className="streamingtext">Dive into environment that understands your goals, aided by a chatbot, paving your path to career success!</h2>
-        </div>
-        <div className="navigation-buttons">
-          <button className="nav-btn" onClick={() => Home3Ref.current.scrollIntoView({ behavior: 'smooth' })}>Let's start!</button>
-        </div>
-        <div className="sectionreverse1">
+      <Xwrapper>
+        <div className="Home1">
+          <div className="logo-container" >
+            <h1 className="logo">PathFinder</h1>
 
-          <img className="img1" src={starting} alt="starting" />
-          <div className="description1">
-            <h2>Over a Thousand Potential Career Pathways</h2>
-            <h2>Get Ahead with 200 Emerging Professions</h2>
-            <h2>Reports Tailored to Your Skills and Interests</h2>
-          </div>
+            <img src={binoculars} id="1" alt="binoculars" className="logo-image" />
 
-        </div>
-      </div>
-      <div className="Home2">
-        <h1 className="KeyFeatures">Key Features</h1>
-        <div className="section">
-          <div className="description">
-            <h1>Personalized Suggestions</h1>
-            <h3>Unlock your ideal career with personalized recommendations, combining your strengths and passions. Our platform uses a unique algorithm to match you with fulfilling career paths suited just for you!</h3>
           </div>
-          <img className="img" src={resluts} alt="results" />
-        </div>
-        <div className="sectionreverse">
-          <img className="img" src={resultspdf} alt="results pdf" />
-          <div className="description">
-            <h1>In-depth Analysis</h1>
-            <h3>Navigate your career path with our comprehensive personality assessments. Our platform uses advanced algorithms to align your unique strengths with the right profession, setting you up for a successful future.</h3>
+          <div className="streamingtext-wrapper">
+            <h2 className="streamingtext">Dive into environment that understands your goals, aided by a chatbot, paving your path to career success!</h2>
+          </div>
+          <div className="navigation-buttons">
+            <button className="nav-btn" onClick={() => Home3Ref.current.scrollIntoView({ behavior: 'smooth' })} >Let's start!</button>
+          </div>
+          <div className="logo-container">
+            <div className="sectionreverse1">
+
+              <img className="img1" src={starting} alt="starting" />
+              <div className="description1" >
+                <h2>Over a Thousand Potential Career Pathways</h2>
+                <h2>Get Ahead with 200 Emerging Professions</h2>
+                <h2>Reports Tailored to Your Skills and Interests</h2>
+              </div>
+            </div>
+            <img src={star} id="2" alt="star" className="logo-image" />
           </div>
         </div>
-        <div className="section">
-          <div className="description">
-            <h1>AI Assistant</h1>
-            <h3>Facing tough decisions? Our AI chatbot is here to help. Providing instant guidance based on your unique needs, our Assistant supports confident decision-making. Join countless others who have benefited from this personalized advice!</h3>
+
+        <div className="Home2">
+
+          <h1 className="KeyFeatures" ref={Startbutton} >Key Features</h1>
+
+          <div className="logo-container">
+            <div className="section">
+              <div id="keyFeatures" className="description">
+                <h1>Personalized Suggestions</h1>
+                <h3 ref={KeyFeaturesRef}>Unlock your ideal career with personalized recommendations, combining your strengths and passions. Our platform uses a unique algorithm to match you with fulfilling career paths suited just for you!</h3>
+              </div>
+              <img className="img" src={resluts} alt="results" />
+            </div>
+            <img src={gold} id="3" alt="gold" className="logo-image1" />
           </div>
-          <img className="img" src={chatbot} alt="chatbot" />
+          <div className="logo-container">
+
+            <div className="sectionreverse" ref={Description1} >
+              <img className="img" src={resultspdf} alt="results pdf" />
+              <div className="description" >
+                <h1>In-depth Analysis</h1>
+                <h3 >Navigate your career path with our comprehensive personality assessments. Our platform uses advanced algorithms to align your unique strengths with the right profession, setting you up for a successful future.</h3>
+              </div>
+            </div>
+            <img src={report} id="4" alt="report" className="logo-image" />
+          </div>
+          <div className="logo-container">
+            <div className="section">
+              <div className="description">
+                <h1 ref={Description2}>AI Assistant </h1>
+                <h3>Facing tough decisions? Our AI chatbot is here to help. Providing instant guidance based on your unique needs, our Assistant supports confident decision-making. Join countless others who have benefited from this personalized advice!</h3>
+              </div>
+              <img className="img" src={chatbot} alt="chatbot" />
+
+            </div>
+            <img src={question} id="5" alt="question" className="logo-image1" />
+          </div>
         </div>
-      </div>
-      <div className="Home3" ref={Home3Ref}>
-        <h1 className="Authorize">Authorize</h1>
-        {errorMessage && <p>{errorMessage}</p>}
-        <form onSubmit={submitHandler}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Sign in</button>
-        </form>
-      </div>
-    </div>
+        <div className="Home3" ref={Home3Ref}>
+          <h1 id="6" className="Authorize">Authorize</h1>
+          {errorMessage && <p>{errorMessage}</p>}
+          <form onSubmit={submitHandler}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">Sign in</button>
+          </form>
+        </div>
+
+        {isVisibleStartbutton && (
+          <>
+            <div className="xarrow">
+              <ReactXarrow
+                start="1"
+                end="2"
+                color='rgba(28, 30, 162, 0.64)'
+                animateDrawing={true}
+                headShape={'none'}
+                // headColor={'white'}
+                headSize={1}
+                strokeWidth={4}
+                path='grid'
+                curveness={0.8}
+              />
+            </div>
+          </>
+        )}
+        {isVisibleKeyFeatures && (
+          <>
+            <div className="xarrow1">
+              <ReactXarrow
+                start="2"
+                end="3"
+                color='rgba(162, 38, 46, 0.64)'
+                path="smooth"
+                animateDrawing={true}
+                curveness={1.5}
+                startAnchor="bottom"
+                endAnchor="top"
+                headShape={'none'}
+                // headColor={'white'}
+                headSize={1}
+                strokeWidth={4}
+                gridBreak="60%"
+              />
+            </div>
+          </>
+        )}
+        {isVisibleDescription1 && (
+          <>
+
+            <div className="xarrow">
+              <ReactXarrow
+                start="3"
+                end="4"
+                color='rgba(192, 163, 32, 0.64)'
+                path="smooth"
+                curveness={1}
+                animateDrawing={true}
+                startAnchor="bottom"
+                endAnchor="top"
+                headShape={'none'}
+                // headColor={'white'}
+                headSize={1}
+                strokeWidth={4}
+                gridBreak="60%"
+              />
+            </div>
+          </>
+        )}
+        {isVisibleDescription2 && (
+          <>
+
+            <div className="xarrow">
+              <ReactXarrow
+                start="4"
+                end="5"
+                color='rgba(32, 152, 192, 0.64)'
+                path="smooth"
+                curveness={1.8}
+                startAnchor="bottom"
+                endAnchor="top"
+                animateDrawing={true}
+                headShape={'none'}
+                // headColor={'white'}
+                headSize={1}
+                strokeWidth={4}
+                gridBreak="60%"
+              />
+            </div>
+          </>
+        )}
+        {isVisibleHome3 && (
+          <>
+            <div className="xarrow">
+              <ReactXarrow
+                start="5"
+                end="6"
+                color='rgba(77, 192, 32, 0.64)'
+                path="smooth"
+                curveness={1.2}
+                startAnchor="bottom"
+                endAnchor="top"
+                animateDrawing={true}
+                headShape={'none'}
+                // headColor={'white'}
+                headSize={6}
+                strokeWidth={4}
+                gridBreak="60%"
+              />
+            </div>
+          </>
+        )}
+      </Xwrapper>
+
+    </div >
   );
 };
 
