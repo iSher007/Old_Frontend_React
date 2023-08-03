@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef, useState } from 'react';
+import { Bar } from 'react-chartjs-2';
 import { Link, Route, BrowserRouter as Router, Routes, useNavigate, useParams } from 'react-router-dom';
 import ReactXarrow, { Xwrapper } from "react-xarrows";
 import './App.css';
@@ -12,6 +14,7 @@ import star from './rating-svgrepo-com.svg';
 import resluts from './results.jpg';
 import gold from './sales-performance-svgrepo-com.svg';
 import starting from './starting.gif';
+Chart.register(...registerables);
 
 
 
@@ -126,7 +129,7 @@ const Upload = () => {
       <h4>Fill all cells. Click on test names to access their websites, if needed.</h4>
       <form onSubmit={submitHandler}>
         <div className="container-upload-text">
-          Your date of birth
+          <strong>Your date of birth</strong>
         </div>
         <div>
           <input
@@ -137,13 +140,13 @@ const Upload = () => {
           />
         </div>
         <div className="container-upload-text">
-          <a href="https://www.gallup.com/home.aspx" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Upload Gallup Test Results file</a>
+          <a href="https://www.gallup.com/home.aspx" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}><strong>Upload Gallup Test Results file</strong></a>
         </div>
         <div>
           <input type="file" accept=".pdf" onChange={handleFileChange} />
         </div>
         <div className="container-upload-text">
-          <a href="https://www.16personalities.com/free-personality-test" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Myers – Briggs Type Indicator Results</a>
+          <a href="https://www.16personalities.com/free-personality-test" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}><strong>Myers – Briggs Type Indicator Results</strong></a>
         </div>
         <div>
           <input
@@ -154,30 +157,33 @@ const Upload = () => {
           />
         </div>
         <div className="container-upload-text">
-          <a href="https://www.idrlabs.com/multiple-intelligences/test.php" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Multiple Intelligences Test Results</a>
+          <a href="https://www.idrlabs.com/multiple-intelligences/test.php" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}> <strong>Multiple Intelligences Test Results</strong></a>
         </div>
-        {MIT_FIELDS.map(field => (
-          <div className="mit-field" key={field}>
-            <label className="mit-label">{field}</label>
-            <input
-              type="MIT"
-              className="mit-input"
-              placeholder={`Ex. 70%`}
-              value={mitInput[field]}
-              onChange={e => handleMitChange(e, field)}
-            />
-          </div>
-        ))}
+        {
+          MIT_FIELDS.map(field => (
+            <div className="mit-field" key={field}>
+              <label className="mit-label">{field}</label>
+              <input
+                type="MIT"
+                className="mit-input"
+                placeholder={`Ex. 70%`}
+                value={mitInput[field]}
+                onChange={e => handleMitChange(e, field)}
+              />
+            </div>
+          ))
+        }
         <div className='upload-button'>
           <button type="submit" disabled={isLoading} style={{ marginTop: '10px' }}>
             {isLoading ? 'Sending...' : 'Send your results'}
           </button>
         </div>
-      </form>
+      </form >
       {errorMessage && <p>{errorMessage}</p>}
-    </div>
+    </div >
   );
 };
+
 
 
 
@@ -187,39 +193,38 @@ const Results = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [tableData, setTableData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
-  const [filterTerm, setFilterTerm] = useState('');
+  const [filterTerms, setFilterTerms] = useState([]);
+  const [range, setRange] = useState({ min: 0, max: 100 });
 
   useEffect(() => {
-    const fetchTableData = () => {
+    const fetchTableData = async () => {
       setIsLoading(true);
-
       const token = localStorage.getItem('access_token');
-
-      axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
+      try {
+        const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        .then((response) => {
-          const data = response.data;
-          setTableData(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error(error);
-          setIsLoading(false);
         });
+        const data = response.data;
+        setTableData(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
     };
 
     fetchTableData();
   }, [pdfId]);
 
   const handleOpenPDF = () => {
+    const token = localStorage.getItem('access_token');
+
     axios
       .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -231,20 +236,68 @@ const Results = () => {
   };
 
   useEffect(() => {
-    if (filterTerm === '') {
+    if (filterTerms.length === 0) {
       setFilteredData(tableData);
     } else {
-      const filtered = tableData.filter(row => row.Field === filterTerm);
+      const filtered = tableData.filter(row => filterTerms.includes(row.Field));
       setFilteredData(filtered);
     }
-  }, [filterTerm, tableData]);
+  }, [filterTerms, tableData]);
 
-  const handleFilterChange = (e) => {
-    setFilterTerm(e.target.value);
-  }
+  const handleFilterChange = (field) => {
+    const newFilterTerms = [...filterTerms];
 
-  // Get a unique list of 'Field' values
+    if (filterTerms.includes(field)) {
+      const index = newFilterTerms.indexOf(field);
+      newFilterTerms.splice(index, 1);
+    } else {
+      newFilterTerms.push(field);
+    }
+
+    setFilterTerms(newFilterTerms);
+  };
+
   const fieldOptions = Array.isArray(tableData) ? [...new Set(tableData.map(item => item.Field))] : [];
+  const half = Math.ceil(fieldOptions.length / 2);
+  const firstHalfOptions = fieldOptions.splice(0, half);
+  const secondHalfOptions = fieldOptions.splice(-half);
+
+  const handleRangeChange = (boundary, value) => {
+    setRange(prevRange => ({
+      ...prevRange,
+      [boundary]: Number(value),
+    }));
+  };
+
+  const calculateChartData = () => {
+    if (!tableData) {
+      return {
+        labels: [],
+        datasets: [],
+      };
+    }
+
+    const filteredData = tableData.filter(data => {
+      const place = Number(data.Place);
+      return place >= range.min && place <= range.max;
+    });
+
+    const fieldCounts = filteredData.reduce((counts, data) => {
+      counts[data.Field] = (counts[data.Field] || 0) + 1;
+      return counts;
+    }, {});
+
+    return {
+      labels: Object.keys(fieldCounts),
+      datasets: [{
+        label: 'Number of Fields',
+        data: Object.values(fieldCounts),
+        backgroundColor: 'rgba(75, 192, 192, 0.6)', // Change to any color you like
+      }],
+    };
+  };
+
+  const chartData = calculateChartData();
 
   return (
     <div className="results-container">
@@ -256,51 +309,97 @@ const Results = () => {
           Download All
         </button>
       </div>
-      <div className="results-main">
+      <div className="container">
         <h1>Best Fit Career</h1>
-        <div>
-          Select field
-          <select value={filterTerm} onChange={handleFilterChange} className="filter-input">
-
-            <option value="">All</option>
-
-            {fieldOptions.map(field => <option value={field}>{field}</option>)}
-          </select>
-        </div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            {Array.isArray(filteredData) && filteredData.length > 0 ? (
-              <table className="results-table">
-                <thead>
-                  <tr>
-                    <th>Place</th>
-                    <th>Field</th>
-                    <th>Subfield</th>
-                    <th>Profession</th>
-                    <th>Fit Percentage</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((row, index) => (
-                    <tr key={index}>
-                      <td>{row.Place}</td>
-                      <td>{row.Field}</td>
-                      <td>{row.Subfield}</td>
-                      <td>{row.Professions}</td>
-                      <td>{row['Percentage fitting']}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>No table data available.</p>
-            )}
-          </>
-        )}
       </div>
-    </div>
+      <div className="results-main">
+        <div>
+          <h3>Select the fields of interest </h3>
+          <div className="filter-input">
+            <div className="checkbox-column">
+              {firstHalfOptions.map(field => (
+                <div key={field}>
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${field}`}
+                    checked={filterTerms.includes(field)}
+                    onChange={() => handleFilterChange(field)}
+                  />
+                  <label htmlFor={`checkbox-${field}`}>{field}</label>
+                </div>
+              ))}
+            </div>
+
+            <div className="checkbox-column">
+              {secondHalfOptions.map(field => (
+                <div key={field}>
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${field}`}
+                    checked={filterTerms.includes(field)}
+                    onChange={() => handleFilterChange(field)}
+                  />
+                  <label htmlFor={`checkbox-${field}`}>{field}</label>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="results-main2">
+        <h3>Examine fields within the defined range</h3>
+        <div className="range-inputs">
+          <label>
+            Min Place:
+            <input type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
+          </label>
+          <label>
+            Max Place:
+            <input type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
+          </label>
+        </div>
+        <div className="chart-container">
+          <Bar data={chartData} />
+        </div>
+      </div>
+
+      <div className="container-text1">
+        <div className="results-main1">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              {Array.isArray(filteredData) && filteredData.length > 0 ? (
+                <table className="results-table">
+                  <thead>
+                    <tr>
+                      <th>Place</th>
+                      <th>Field</th>
+                      <th>Subfield</th>
+                      <th>Profession</th>
+                      <th>Fit Percentage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.Place}</td>
+                        <td>{row.Field}</td>
+                        <td>{row.Subfield}</td>
+                        <td>{row.Professions}</td>
+                        <td>{row['Percentage fitting']}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No table data available.</p>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </div >
   );
 };
 
@@ -309,39 +408,38 @@ const Results_new = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [tableData, setTableData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
-  const [filterTerm, setFilterTerm] = useState('');
+  const [filterTerms, setFilterTerms] = useState([]);
+  const [range, setRange] = useState({ min: 0, max: 100 });
 
   useEffect(() => {
-    const fetchTableData = () => {
+    const fetchTableData = async () => {
       setIsLoading(true);
-
       const token = localStorage.getItem('access_token');
-
-      axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity_new`, {
+      try {
+        const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity_new`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        .then((response) => {
-          const data = response.data;
-          setTableData(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error(error);
-          setIsLoading(false);
         });
+        const data = response.data;
+        setTableData(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
     };
 
     fetchTableData();
   }, [pdfId]);
 
   const handleOpenPDF = () => {
+    const token = localStorage.getItem('access_token');
+
     axios
       .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download_new`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -353,20 +451,68 @@ const Results_new = () => {
   };
 
   useEffect(() => {
-    if (filterTerm === '') {
+    if (filterTerms.length === 0) {
       setFilteredData(tableData);
     } else {
-      const filtered = tableData.filter(row => row.Field === filterTerm);
+      const filtered = tableData.filter(row => filterTerms.includes(row.Field));
       setFilteredData(filtered);
     }
-  }, [filterTerm, tableData]);
+  }, [filterTerms, tableData]);
 
-  const handleFilterChange = (e) => {
-    setFilterTerm(e.target.value);
-  }
+  const handleFilterChange = (field) => {
+    const newFilterTerms = [...filterTerms];
 
-  // Get a unique list of 'Field' values
+    if (filterTerms.includes(field)) {
+      const index = newFilterTerms.indexOf(field);
+      newFilterTerms.splice(index, 1);
+    } else {
+      newFilterTerms.push(field);
+    }
+
+    setFilterTerms(newFilterTerms);
+  };
+
   const fieldOptions = Array.isArray(tableData) ? [...new Set(tableData.map(item => item.Field))] : [];
+  const half = Math.ceil(fieldOptions.length / 2);
+  const firstHalfOptions = fieldOptions.splice(0, half);
+  const secondHalfOptions = fieldOptions.splice(-half);
+
+  const handleRangeChange = (boundary, value) => {
+    setRange(prevRange => ({
+      ...prevRange,
+      [boundary]: Number(value),
+    }));
+  };
+
+  const calculateChartData = () => {
+    if (!tableData) {
+      return {
+        labels: [],
+        datasets: [],
+      };
+    }
+
+    const filteredData = tableData.filter(data => {
+      const place = Number(data.Place);
+      return place >= range.min && place <= range.max;
+    });
+
+    const fieldCounts = filteredData.reduce((counts, data) => {
+      counts[data.Field] = (counts[data.Field] || 0) + 1;
+      return counts;
+    }, {});
+
+    return {
+      labels: Object.keys(fieldCounts),
+      datasets: [{
+        label: 'Number of Fields',
+        data: Object.values(fieldCounts),
+        backgroundColor: 'rgba(143, 75, 192, 0.6)', // Change to any color you like
+      }],
+    };
+  };
+
+  const chartData = calculateChartData();
 
   return (
     <div className="results-container">
@@ -377,50 +523,100 @@ const Results_new = () => {
         <button onClick={handleOpenPDF} className='results-button'>
           Download All
         </button>
+        <Link to={`/results/${pdfId}`}>
+          <button type='submit' className='results-button'>Get Back</button>
+        </Link>
+      </div>
+      <div className="container">
+        <h1>New Professions and Competencies</h1>
       </div>
       <div className="results-main">
-        <h1>Best Fit Career</h1>
         <div>
-          Select field
-          <select value={filterTerm} onChange={handleFilterChange} className="filter-input">
+          <h3>Select the fields of interest </h3>
+          <div className="filter-input">
+            <div className="checkbox-column">
+              {firstHalfOptions.map(field => (
+                <div key={field}>
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${field}`}
+                    checked={filterTerms.includes(field)}
+                    onChange={() => handleFilterChange(field)}
+                  />
+                  <label htmlFor={`checkbox-${field}`}>{field}</label>
+                </div>
+              ))}
+            </div>
 
-            <option value="">All</option>
-
-            {fieldOptions.map(field => <option value={field}>{field}</option>)}
-          </select>
+            <div className="checkbox-column">
+              {secondHalfOptions.map(field => (
+                <div key={field}>
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${field}`}
+                    checked={filterTerms.includes(field)}
+                    onChange={() => handleFilterChange(field)}
+                  />
+                  <label htmlFor={`checkbox-${field}`}>{field}</label>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            {Array.isArray(filteredData) && filteredData.length > 0 ? (
-              <table className="results-table">
-                <thead>
-                  <tr>
-                    <th>Place</th>
-                    <th>Field</th>
-                    <th>Year of appearance</th>
-                    <th>Profession</th>
-                    <th>Fit Percentage</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((row, index) => (
-                    <tr key={index}>
-                      <td>{row.Place}</td>
-                      <td>{row.Field}</td>
-                      <td>{row['Year of appearance']}</td>
-                      <td>{row.Professions}</td>
-                      <td>{row['Percentage fitting']}</td>
+      </div>
+      <div className="results-main2">
+        <h3>Examine fields within the defined range</h3>
+        <div className="range-inputs">
+          <label>
+            Min Place:
+            <input type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
+          </label>
+          <label>
+            Max Place:
+            <input type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
+          </label>
+        </div>
+        <div className="chart-container">
+          <Bar data={chartData} />
+        </div>
+      </div>
+      <div className="container-text1">
+        <div className="results-main1">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              {Array.isArray(filteredData) && filteredData.length > 0 ? (
+                <table className="results-table">
+                  <thead>
+                    <tr>
+                      <th>Place</th>
+                      <th>Field</th>
+                      <th>Profession</th>
+                      <th>Year of appearance</th>
+                      <th>Description</th>
+                      <th>Fit Percentage</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>No table data available.</p>
-            )}
-          </>
-        )}
+                  </thead>
+                  <tbody>
+                    {filteredData.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.Place}</td>
+                        <td>{row.Field}</td>
+                        <td>{row.Professions}</td>
+                        <td>{row['Year of appearance']}</td>
+                        <td><a href={row['Description link']} target="_blank" rel="noopener noreferrer">Open Link</a></td>
+                        <td>{row['Percentage fitting']}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No table data available.</p>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -503,11 +699,11 @@ const ResultsPdf = () => {
   const renderSelectedContent = () => {
     switch (selectedOption) {
       case "content1":
-        return renderContent("EXPLORE YOUR PERSONALITY", "BEST CAREER FIELDS");
+        return renderContent("REPORT 1: EXPLORE YOUR PERSONALITY", "REPORT 2: BEST CAREER FIELDS");
       case "content2":
-        return renderContent("BEST CAREER FIELDS", "TOP 5 PROFESSIONS");
+        return renderContent("REPORT 2: BEST CAREER FIELDS", "REPORT 3: TOP 5 PROFESSIONS");
       case "content3":
-        return renderContent("TOP 5 PROFESSIONS");
+        return renderContent("REPORT 3: TOP 5 PROFESSIONS");
       default:
         return null;
     }
@@ -522,7 +718,7 @@ const ResultsPdf = () => {
         <button type='submit' onClick={handleOpenPDF} className='results-button'>
           Download All
         </button>
-        <Link to={`/results/${pdfId}`}>
+        <Link to={`/results_new/${pdfId}`}>
           <button type='submit' className='results-button'>Get Back</button>
         </Link>
 
@@ -719,7 +915,7 @@ const Home = () => {
 
               <img className="img1" src={starting} alt="starting" />
               <div className="description1" >
-                <h2>Over a Thousand Potential Career Pathways</h2>
+                <h2>Over 400 Potential Career Pathways</h2>
                 <h2>Get Ahead with 200 Emerging Professions</h2>
                 <h2>Reports Tailored to Your Skills and Interests</h2>
               </div>
