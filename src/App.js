@@ -86,7 +86,7 @@ const Upload = () => {
 
     const token = localStorage.getItem('access_token');
 
-    axios.post('https://fastapi-production-fffa.up.railway.app/Gallup/pdf', formData, {
+    axios.post('http://localhost:8000/Gallup/pdf', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -201,7 +201,7 @@ const Results = () => {
       setIsLoading(true);
       const token = localStorage.getItem('access_token');
       try {
-        const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
+        const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -222,7 +222,7 @@ const Results = () => {
     const token = localStorage.getItem('access_token');
 
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -303,10 +303,10 @@ const Results = () => {
     <div className="results-container">
       <div className="buttons-container">
         <Link to={`/results_new/${pdfId}`}>
-          <button className='results-button'>Next Thing</button>
+          <button className='results-button'>Next</button>
         </Link>
         <button onClick={handleOpenPDF} className='results-button'>
-          Download All
+          Download
         </button>
       </div>
       <div className="container">
@@ -416,7 +416,7 @@ const Results_new = () => {
       setIsLoading(true);
       const token = localStorage.getItem('access_token');
       try {
-        const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity_new`, {
+        const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity_new`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -437,7 +437,7 @@ const Results_new = () => {
     const token = localStorage.getItem('access_token');
 
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download_new`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download_new`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -518,13 +518,13 @@ const Results_new = () => {
     <div className="results-container">
       <div className="buttons-container">
         <Link to={`/results_pdf/${pdfId}`}>
-          <button className='results-button'>Next Thing</button>
+          <button className='results-button'>Next</button>
         </Link>
         <button onClick={handleOpenPDF} className='results-button'>
-          Download All
+          Download
         </button>
         <Link to={`/results/${pdfId}`}>
-          <button type='submit' className='results-button'>Get Back</button>
+          <button type='submit' className='results-button'>Back</button>
         </Link>
       </div>
       <div className="container">
@@ -638,7 +638,7 @@ const ResultsPdf = () => {
       const token = localStorage.getItem('access_token');
 
       axios
-        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments`, {
+        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -659,7 +659,7 @@ const ResultsPdf = () => {
 
   const handleOpenPDF = () => {
     axios
-      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments_download`, {
+      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments_download`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -713,13 +713,13 @@ const ResultsPdf = () => {
     <div className="results-container">
       <div className="buttons-container">
         <Link to={`/chatbot/${pdfId}`}>
-          <button type='submit' className='results-button'>Next Thing</button>
+          <button type='submit' className='results-button'>Next</button>
         </Link>
         <button type='submit' onClick={handleOpenPDF} className='results-button'>
-          Download All
+          Download
         </button>
         <Link to={`/results_new/${pdfId}`}>
-          <button type='submit' className='results-button'>Get Back</button>
+          <button type='submit' className='results-button'>Back</button>
         </Link>
 
       </div>
@@ -751,7 +751,7 @@ const Chatbot = () => {
   const sendMessage = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_bot`, {
+      const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_bot`, {
         params: {
           bot_question: message,
         },
@@ -786,7 +786,7 @@ const Chatbot = () => {
       <div className="buttons-container1">
 
         <Link to={`/results_pdf/${pdfId}`}>
-          <button type='submit' className='results-button'>Get Back</button>
+          <button type='submit' className='results-button'>Back</button>
         </Link>
 
       </div>
@@ -816,7 +816,7 @@ const Chatbot = () => {
             Send
           </button>
           <button type="button" onClick={handleNextQuestion} disabled={isLoading} className="clear-button">
-            Clear all
+            Clear
           </button>
         </form>
       </div>
@@ -850,7 +850,7 @@ const Home = () => {
     data.append('username', email);
     data.append('password', password);
 
-    axios.post('https://fastapi-production-fffa.up.railway.app/auth/users/tokens', data)
+    axios.post('http://localhost:8000/auth/users/tokens', data)
       .then((response) => {
         const { access_token } = response.data;
         localStorage.setItem('access_token', access_token);
@@ -905,7 +905,7 @@ const Home = () => {
 
           </div>
           <div className="streamingtext-wrapper">
-            <h2 className="streamingtext">Dive into environment that understands your goals, aided by a chatbot, paving your path to career success!</h2>
+            <h2 className="streamingtext"><span>Dive into environment that understands your goals, aided by a chatbot, paving your path to career success!</span></h2>
           </div>
           <div className="navigation-buttons">
             <button className="nav-btn" onClick={() => Home3Ref.current.scrollIntoView({ behavior: 'smooth' })} >Let's start!</button>
@@ -962,7 +962,7 @@ const Home = () => {
           </div>
         </div>
         <div className="Home3" ref={Home3Ref}>
-          <h1 id="6" className="Authorize">Authorize</h1>
+          <h1 id="6" className="Authorize">Let's Go</h1>
           {errorMessage && <p>{errorMessage}</p>}
           <form onSubmit={submitHandler}>
             <input
