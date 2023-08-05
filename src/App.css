@@ -983,3 +983,38 @@
 .xarrow1 {
     z-index: 2;
 }
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.loader-container h1 {
+    font-size: 2.2em;
+    color: #1f053b;
+    padding: 20px 0;
+}
+
+.content-list {
+    font-size: 1.1em;
+    text-align: justify;
+    list-style: inside;
+}
+
+.content-list li {
+    margin-bottom: 15px;
+}
+
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+}

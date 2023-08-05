@@ -3,6 +3,7 @@ import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Link, Route, BrowserRouter as Router, Routes, useNavigate, useParams } from 'react-router-dom';
+import { BeatLoader } from "react-spinners";
 import ReactXarrow, { Xwrapper } from "react-xarrows";
 import './App.css';
 import resultspdf from './ResultsPDF.jpg';
@@ -301,105 +302,125 @@ const Results = () => {
 
   return (
     <div className="results-container">
-      <div className="buttons-container">
-        <Link to={`/results_new/${pdfId}`}>
-          <button className='results-button'>Next</button>
-        </Link>
-        <button onClick={handleOpenPDF} className='results-button'>
-          Download
-        </button>
-      </div>
-      <div className="container">
-        <h1>Best Fit Career</h1>
-      </div>
-      <div className="results-main">
-        <div>
-          <h3>Select the fields of interest </h3>
-          <div className="filter-input">
-            <div className="checkbox-column">
-              {firstHalfOptions.map(field => (
-                <div key={field}>
-                  <input
-                    type="checkbox"
-                    id={`checkbox-${field}`}
-                    checked={filterTerms.includes(field)}
-                    onChange={() => handleFilterChange(field)}
-                  />
-                  <label htmlFor={`checkbox-${field}`}>{field}</label>
-                </div>
-              ))}
-            </div>
-
-            <div className="checkbox-column">
-              {secondHalfOptions.map(field => (
-                <div key={field}>
-                  <input
-                    type="checkbox"
-                    id={`checkbox-${field}`}
-                    checked={filterTerms.includes(field)}
-                    onChange={() => handleFilterChange(field)}
-                  />
-                  <label htmlFor={`checkbox-${field}`}>{field}</label>
-                </div>
-              ))}
-            </div>
+      {isLoading ? (
+        <div className="loader-container">
+          <h1>What Can You Discover Here?</h1>
+          <ul className="content-list">
+            <li><strong>PROFESSIONAL DISCOVERY:</strong> - Explore an extensive list of professions tailored to your aptitude.</li>
+            <li><strong>DEEP DIVE:</strong> - Open the links in the description to delve into each profession's details.</li>
+            <li><strong>CUSTOMIZED VIEW:</strong> - Select fields of personal interest for a customized viewing experience.</li>
+            <li><strong>RANKING INSIGHT:</strong> - Utilize our top-chart to identify the quantity of fields within a range of rankings.</li>
+          </ul>
+          <div className="loader">
+            <BeatLoader color="#4A90E2" />
           </div>
         </div>
-      </div>
-      <div className="results-main2">
-        <h3>Examine fields within the defined range</h3>
-        <div className="range-inputs">
-          <label>
-            Min Place:
-            <input type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
-          </label>
-          <label>
-            Max Place:
-            <input type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
-          </label>
-        </div>
-        <div className="chart-container">
-          <Bar data={chartData} />
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="buttons-container">
+            <Link to={`/results_new/${pdfId}`}>
+              <button className='results-button'>Next</button>
+            </Link>
+            <button onClick={handleOpenPDF} className='results-button'>
+              Download
+            </button>
+          </div>
 
-      <div className="container-text1">
-        <div className="results-main1">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              {Array.isArray(filteredData) && filteredData.length > 0 ? (
-                <table className="results-table">
-                  <thead>
-                    <tr>
-                      <th>Place</th>
-                      <th>Field</th>
-                      <th>Subfield</th>
-                      <th>Profession</th>
-                      <th>Fit Percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredData.map((row, index) => (
-                      <tr key={index}>
-                        <td>{row.Place}</td>
-                        <td>{row.Field}</td>
-                        <td>{row.Subfield}</td>
-                        <td>{row.Professions}</td>
-                        <td>{row['Percentage fitting']}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          <div className="container">
+            <h1>Best Fit Career</h1>
+          </div>
+
+          <div className="results-main">
+            <div>
+              <h3>Select the fields of interest </h3>
+              <div className="filter-input">
+                <div className="checkbox-column">
+                  {firstHalfOptions.map(field => (
+                    <div key={field}>
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${field}`}
+                        checked={filterTerms.includes(field)}
+                        onChange={() => handleFilterChange(field)}
+                      />
+                      <label htmlFor={`checkbox-${field}`}>{field}</label>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="checkbox-column">
+                  {secondHalfOptions.map(field => (
+                    <div key={field}>
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${field}`}
+                        checked={filterTerms.includes(field)}
+                        onChange={() => handleFilterChange(field)}
+                      />
+                      <label htmlFor={`checkbox-${field}`}>{field}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="results-main2">
+            <h3>Examine fields within the defined range</h3>
+            <div className="range-inputs">
+              <label>
+                Min Place:
+                <input type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
+              </label>
+              <label>
+                Max Place:
+                <input type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
+              </label>
+            </div>
+            <div className="chart-container">
+              <Bar data={chartData} />
+            </div>
+          </div>
+
+          <div className="container-text1">
+            <div className="results-main1">
+              {isLoading ? (
+                <p>Loading...</p>
               ) : (
-                <p>No table data available.</p>
+                <>
+                  {Array.isArray(filteredData) && filteredData.length > 0 ? (
+                    <table className="results-table">
+                      <thead>
+                        <tr>
+                          <th>Place</th>
+                          <th>Field</th>
+                          <th>Subfield</th>
+                          <th>Profession</th>
+                          <th>Fit Percentage</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((row, index) => (
+                          <tr key={index}>
+                            <td>{row.Place}</td>
+                            <td>{row.Field}</td>
+                            <td>{row.Subfield}</td>
+                            <td>{row.Professions}</td>
+                            <td>{row['Percentage fitting']}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p>No table data available.</p>
+                  )}
+                </>
               )}
-            </>
-          )}
-        </div>
-      </div>
-    </div >
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
@@ -516,108 +537,125 @@ const Results_new = () => {
 
   return (
     <div className="results-container">
-      <div className="buttons-container">
-        <Link to={`/results_pdf/${pdfId}`}>
-          <button className='results-button'>Next</button>
-        </Link>
-        <button onClick={handleOpenPDF} className='results-button'>
-          Download
-        </button>
-        <Link to={`/results/${pdfId}`}>
-          <button type='submit' className='results-button'>Back</button>
-        </Link>
-      </div>
-      <div className="container">
-        <h1>New Professions and Competencies</h1>
-      </div>
-      <div className="results-main">
-        <div>
-          <h3>Select the fields of interest </h3>
-          <div className="filter-input">
-            <div className="checkbox-column">
-              {firstHalfOptions.map(field => (
-                <div key={field}>
-                  <input
-                    type="checkbox"
-                    id={`checkbox-${field}`}
-                    checked={filterTerms.includes(field)}
-                    onChange={() => handleFilterChange(field)}
-                  />
-                  <label htmlFor={`checkbox-${field}`}>{field}</label>
-                </div>
-              ))}
-            </div>
-
-            <div className="checkbox-column">
-              {secondHalfOptions.map(field => (
-                <div key={field}>
-                  <input
-                    type="checkbox"
-                    id={`checkbox-${field}`}
-                    checked={filterTerms.includes(field)}
-                    onChange={() => handleFilterChange(field)}
-                  />
-                  <label htmlFor={`checkbox-${field}`}>{field}</label>
-                </div>
-              ))}
-            </div>
+      {isLoading ? (
+        <div className="loader-container">
+          <h1>What's Emerging in Your Future?</h1>
+          <ul className="content-list">
+            <li><strong>FUTURE PROFESSIONS:</strong> Discover the latest professions on the horizon, based on your skills and aptitude.</li>
+            <li><strong>EXPLORATION PATHWAYS:</strong> Explore new professions, understanding their requirements and the paths to excel in them.</li>
+            <li><strong>PERSONALIZED DISCOVERY:</strong> Personalize your exploration by selecting fields of interest that capture your curiosity.</li>
+            <li><strong>EMERGING TRENDS:</strong> Use our top-chart to discern the popularity of these emerging fields within ranking ranges.</li>
+          </ul>
+          <div className="loader">
+            <BeatLoader color="#4A90E2" />
           </div>
         </div>
-      </div>
-      <div className="results-main2">
-        <h3>Examine fields within the defined range</h3>
-        <div className="range-inputs">
-          <label>
-            Min Place:
-            <input type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
-          </label>
-          <label>
-            Max Place:
-            <input type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
-          </label>
-        </div>
-        <div className="chart-container">
-          <Bar data={chartData} />
-        </div>
-      </div>
-      <div className="container-text1">
-        <div className="results-main1">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              {Array.isArray(filteredData) && filteredData.length > 0 ? (
-                <table className="results-table">
-                  <thead>
-                    <tr>
-                      <th>Place</th>
-                      <th>Field</th>
-                      <th>Profession</th>
-                      <th>Year of appearance</th>
-                      <th>Description</th>
-                      <th>Fit Percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredData.map((row, index) => (
-                      <tr key={index}>
-                        <td>{row.Place}</td>
-                        <td>{row.Field}</td>
-                        <td>{row.Professions}</td>
-                        <td>{row['Year of appearance']}</td>
-                        <td><a href={row['Description link']} target="_blank" rel="noopener noreferrer">Open Link</a></td>
-                        <td>{row['Percentage fitting']}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+      ) : (
+        <>
+          <div className="buttons-container">
+            <Link to={`/results_pdf/${pdfId}`}>
+              <button className='results-button'>Next</button>
+            </Link>
+            <button onClick={handleOpenPDF} className='results-button'>
+              Download
+            </button>
+            <Link to={`/results/${pdfId}`}>
+              <button type='submit' className='results-button'>Back</button>
+            </Link>
+          </div>
+          <div className="container">
+            <h1>New Professions and Competencies</h1>
+          </div>
+          <div className="results-main">
+            <div>
+              <h3>Select the fields of interest </h3>
+              <div className="filter-input">
+                <div className="checkbox-column">
+                  {firstHalfOptions.map(field => (
+                    <div key={field}>
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${field}`}
+                        checked={filterTerms.includes(field)}
+                        onChange={() => handleFilterChange(field)}
+                      />
+                      <label htmlFor={`checkbox-${field}`}>{field}</label>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="checkbox-column">
+                  {secondHalfOptions.map(field => (
+                    <div key={field}>
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${field}`}
+                        checked={filterTerms.includes(field)}
+                        onChange={() => handleFilterChange(field)}
+                      />
+                      <label htmlFor={`checkbox-${field}`}>{field}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="results-main2">
+            <h3>Examine fields within the defined range</h3>
+            <div className="range-inputs">
+              <label>
+                Min Place:
+                <input type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
+              </label>
+              <label>
+                Max Place:
+                <input type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
+              </label>
+            </div>
+            <div className="chart-container">
+              <Bar data={chartData} />
+            </div>
+          </div>
+          <div className="container-text1">
+            <div className="results-main1">
+              {isLoading ? (
+                <p>Loading...</p>
               ) : (
-                <p>No table data available.</p>
+                <>
+                  {Array.isArray(filteredData) && filteredData.length > 0 ? (
+                    <table className="results-table">
+                      <thead>
+                        <tr>
+                          <th>Place</th>
+                          <th>Field</th>
+                          <th>Profession</th>
+                          <th>Year of appearance</th>
+                          <th>Description</th>
+                          <th>Fit Percentage</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((row, index) => (
+                          <tr key={index}>
+                            <td>{row.Place}</td>
+                            <td>{row.Field}</td>
+                            <td>{row.Professions}</td>
+                            <td>{row['Year of appearance']}</td>
+                            <td><a href={row['Description link']} target="_blank" rel="noopener noreferrer">Open Link</a></td>
+                            <td>{row['Percentage fitting']}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p>No table data available.</p>
+                  )}
+                </>
               )}
-            </>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -711,32 +749,48 @@ const ResultsPdf = () => {
 
   return (
     <div className="results-container">
-      <div className="buttons-container">
-        <Link to={`/chatbot/${pdfId}`}>
-          <button type='submit' className='results-button'>Next</button>
-        </Link>
-        <button type='submit' onClick={handleOpenPDF} className='results-button'>
-          Download
-        </button>
-        <Link to={`/results_new/${pdfId}`}>
-          <button type='submit' className='results-button'>Back</button>
-        </Link>
+      {isLoading ? (
+        <div className="loader-container">
+          <h1>Unlock Your Potential with Personalized Insights</h1>
+          <ul className="content-list">
+            <li><strong>REPORT 1: YOUR PERSONALITY</strong> - Pesronality analysis based on CliftonStrengths, MBTI, and Multiple Intelligences </li>
+            <li><strong>REPORT 2: BEST CAREER FIELDS</strong> - Explore top career paths aligned with your unique strengths and interests </li>
+            <li><strong>REPORT 3: TOP 5 PROFESSIONS</strong> - Analyze your chosen professions to understand their fit with your strengths </li>
+          </ul>
+          <div className="loader">
+            <BeatLoader color="#4A90E2" />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="buttons-container">
+            <Link to={`/chatbot/${pdfId}`}>
+              <button type='submit' className='results-button'>Next</button>
+            </Link>
+            <button type='submit' onClick={handleOpenPDF} className='results-button'>
+              Download
+            </button>
+            <Link to={`/results_new/${pdfId}`}>
+              <button type='submit' className='results-button'>Back</button>
+            </Link>
 
-      </div>
-      <select value={selectedOption} onChange={handleSelectionChange} className="filter-input2">
-        <option value="content1">REPORT 1: EXPLORE YOUR PERSONALITY</option>
-        <option value="content2">REPORT 2: BEST CAREER FIELDS</option>
-        <option value="content3">REPORT 3: TOP 5 PROFESSIONS</option>
-      </select>
-      <div className="container-text">
+          </div>
+          <select value={selectedOption} onChange={handleSelectionChange} className="filter-input2">
+            <option value="content1">REPORT 1: EXPLORE YOUR PERSONALITY</option>
+            <option value="content2">REPORT 2: BEST CAREER FIELDS</option>
+            <option value="content3">REPORT 3: TOP 5 PROFESSIONS</option>
+          </select>
+          <div className="container-text">
 
-        <h1>Open AI analysis</h1>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          renderSelectedContent()
-        )}
-      </div>
+            <h1>Open AI analysis</h1>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              renderSelectedContent()
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
