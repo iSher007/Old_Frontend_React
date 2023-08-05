@@ -30,7 +30,7 @@ const data = new FormData();
 data.append('username', email);
 data.append('password', password);
 
-axios.post('http://localhost:8000/auth/users/tokens', data)
+axios.post('https://fastapi-production-fffa.up.railway.app/auth/users/tokens', data)
 .then((response) => {
 const { access_token } = response.data;
 localStorage.setItem('access_token', access_token);
@@ -93,7 +93,7 @@ list_of_professions: professions
 
 const token = localStorage.getItem('access_token');
 
-axios.post('http://localhost:8000/Gallup/pdf', data, {
+axios.post('https://fastapi-production-fffa.up.railway.app/Gallup/pdf', data, {
 headers: {
 Authorization: `Bearer ${token}`
 }
@@ -140,7 +140,7 @@ formData.append('file', file);
 
 const token = localStorage.getItem('access_token');
 
-axios.post(`http://localhost:8000/Gallup/${pdfId}/pdf`, formData, {
+axios.post(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf`, formData, {
 headers: {
 Authorization: `Bearer ${token}`,
 'Content-Type': 'multipart/form-data'
@@ -175,7 +175,7 @@ setIsLoading(true);
 
 const token = localStorage.getItem('access_token');
 
-axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity`, {
+axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
 headers: {
 Authorization: `Bearer ${token}`
 }
@@ -196,7 +196,7 @@ setIsLoading(true);
 
 const token = localStorage.getItem('access_token');
 
-axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments`, {
+axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments`, {
 headers: {
 Authorization: `Bearer ${token}`
 }

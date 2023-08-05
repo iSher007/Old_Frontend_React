@@ -86,7 +86,7 @@ const Upload = () => {
 
     const token = localStorage.getItem('access_token');
 
-    axios.post('http://localhost:8000/Gallup/pdf', formData, {
+    axios.post('https://fastapi-production-fffa.up.railway.app/Gallup/pdf', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -201,7 +201,7 @@ const Results = () => {
       setIsLoading(true);
       const token = localStorage.getItem('access_token');
       try {
-        const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity`, {
+        const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -222,7 +222,7 @@ const Results = () => {
     const token = localStorage.getItem('access_token');
 
     axios
-      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download`, {
+      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -416,7 +416,7 @@ const Results_new = () => {
       setIsLoading(true);
       const token = localStorage.getItem('access_token');
       try {
-        const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarity_new`, {
+        const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity_new`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -437,7 +437,7 @@ const Results_new = () => {
     const token = localStorage.getItem('access_token');
 
     axios
-      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_similarities_download_new`, {
+      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download_new`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -638,7 +638,7 @@ const ResultsPdf = () => {
       const token = localStorage.getItem('access_token');
 
       axios
-        .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments`, {
+        .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -659,7 +659,7 @@ const ResultsPdf = () => {
 
   const handleOpenPDF = () => {
     axios
-      .get(`http://localhost:8000/Gallup/${pdfId}/pdf_comments_download`, {
+      .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments_download`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -751,7 +751,7 @@ const Chatbot = () => {
   const sendMessage = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8000/Gallup/${pdfId}/pdf_bot`, {
+      const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_bot`, {
         params: {
           bot_question: message,
         },
@@ -850,7 +850,7 @@ const Home = () => {
     data.append('username', email);
     data.append('password', password);
 
-    axios.post('http://localhost:8000/auth/users/tokens', data)
+    axios.post('https://fastapi-production-fffa.up.railway.app/auth/users/tokens', data)
       .then((response) => {
         const { access_token } = response.data;
         localStorage.setItem('access_token', access_token);
