@@ -946,7 +946,7 @@ const Home = () => {
 
   useEffect(() => {
     if (redirect) {
-      navigate('/results/64d01e3ab38af2f150fd5a2c');
+      navigate('/results/64cff427b38af2f150fd5a2a');
     }
   }, [redirect, navigate]);
 
