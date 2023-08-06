@@ -946,7 +946,7 @@ const Home = () => {
 
   useEffect(() => {
     if (redirect) {
-      navigate('/upload');
+      navigate('/results/64d01e3ab38af2f150fd5a2c');
     }
   }, [redirect, navigate]);
 
@@ -1019,6 +1019,8 @@ const Home = () => {
         </div>
         <div className="Home3" ref={Home3Ref}>
           <h1 id="6" className="Authorize">Let's Go</h1>
+          Login: string@gmail.com / Pathword: string
+
           {errorMessage && <p>{errorMessage}</p>}
           <form onSubmit={submitHandler}>
             <input
