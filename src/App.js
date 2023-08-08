@@ -946,7 +946,7 @@ const Home = () => {
 
   useEffect(() => {
     if (redirect) {
-      navigate('/results/64d02ce921c1f2125051dc30');
+      navigate('/upload');
     }
   }, [redirect, navigate]);
 
