@@ -1,0 +1,44 @@
+.container-upload {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.container-upload-logo {
+    margin-bottom: 0;
+}
+
+.container-upload-text {
+    margin-bottom: 5px;
+}
+
+.container-upload-text {
+    margin-bottom: 5px;
+}
+
+.container-upload-text {
+    margin-bottom: 5px;
+}
+
+.mit-field {
+    margin-left: 25px;
+    margin-top: 2px;
+    position: relative;
+    display: grid;
+    width: 250px;
+    grid-template-columns: 202px 120px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mit-label {
+    text-align: left;
+}
+
+.upload-button {
+    margin-top: 15px;
+}

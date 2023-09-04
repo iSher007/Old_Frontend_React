@@ -1,0 +1,59 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard button[type="submit"] {
+    display: inline-block;
+    cursor: pointer;
+    font-size: large;
+    width: 200px;
+    height: 36px;
+    background-color: #f7f7f7;
+    color: #070707;
+    text-decoration: none;
+    border-radius: 0px;
+    border: 1px solid black;
+    transition: background-color 0.3s
+}
+
+.filters {
+    margin: 10px 0;
+}
+
+.filters select[type="school"],
+.filters select[type="grade"] {
+    cursor: pointer;
+    display: inline-flex;
+    width: 100px;
+    height: 36px;
+    background-color: #f7f7f7;
+    color: #080000;
+    text-decoration: none;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.student-list {
+    border: 1px solid #ccc;
+    max-height: 400px;
+    width: 400px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.student-list div {
+    padding: 10px;
+    border-bottom: 1px solid #e1e1e1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.student-list div:last-child {
+    border-bottom: none;
+}
+
+.student-list div:hover {
+    background-color: #f7f7f7;
+}

@@ -1,0 +1,146 @@
+.results-container {
+    position: relative;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.content-list {
+    font-size: 1.1em;
+    text-align: justify;
+    list-style: inside;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+}
+
+.buttons-container {
+    margin-top: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.results-button {
+    width: 130px;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #080000;
+    text-decoration: none;
+    align-items: left;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.results-button {
+    width: 130px;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #080000;
+    text-decoration: none;
+    align-items: left;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.results-button {
+    width: 130px;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #080000;
+    text-decoration: none;
+    align-items: left;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.filter-input2 {
+    margin-left: 20%;
+    margin-bottom: 5px;
+    display: inline-block;
+    text-align: center;
+    width: 300px;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    color: #080000;
+    text-decoration: none;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.container-text {
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: left;
+    margin-left: 20%;
+    background-color: #fff;
+    /* white background color for the text box */
+    padding: 30px;
+    border-radius: 15px;
+    /* rounded corners */
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    /* a subtle shadow */
+    width: 60%;
+    /* width of the text box, you may adjust it */
+    box-sizing: border-box;
+    overflow: auto;
+    /* in case the text is too much, the box will be scrollable */
+    max-height: 80vh;
+    /* maximum height to prevent the box from occupying the whole screen height */
+}
+
+@media (max-width: 1000px) {
+    .buttons-container1 {
+        margin-top: 0px;
+        margin-right: 5%;
+    }
+
+    .chatbot-container button[type="submit"],
+    .chatbot-container button[type="button"] {
+        width: 80px;
+    }
+
+    .results-button {
+        max-width: 100px !important;
+        margin-bottom: 5px !important;
+        display: inline-block !important;
+        padding: 10px 20px !important;
+    }
+
+    .chatbot-container {
+        width: 90% !important;
+    }
+
+    .buttons-container {
+        margin-top: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+}
