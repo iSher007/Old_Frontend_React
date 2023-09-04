@@ -18,7 +18,7 @@ const App = () => {
         <header className="App-header">
           <div className="top-bar">
             <Link to="/" className="logo-container">
-              <h1>PathFinder</h1>
+              <h1>TANU</h1>
             </Link>
           </div>
         </header>
