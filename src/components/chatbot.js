@@ -1,19 +1,18 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./assets/styles/Chatbot.css";
 
 const Chatbot = () => {
     const [message, setMessage] = useState('');
     const [chat, setChat] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const { pdfId } = useParams();
     const navigate = useNavigate();
 
     const sendMessage = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_bot`, {
+            const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/pdf_bot`, {
                 params: {
                     bot_question: message,
                 },
@@ -40,16 +39,13 @@ const Chatbot = () => {
 
     const handleNextQuestion = () => {
         setChat([]);
-        navigate(`/chatbot/${pdfId}`);
+        navigate(`/chatbot`);
     };
 
     return (
         <div className="chatbot-container1">
             <div className="buttons-container1">
 
-                <Link to={`/results_pdf/${pdfId}`}>
-                    <button type='submit' className='results-button'>Back</button>
-                </Link>
                 <Link to={`/dashboard`}>
                     <button type='submit' className='results-button'>Dashboard</button>
                 </Link>

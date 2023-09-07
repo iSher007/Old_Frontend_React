@@ -13,32 +13,105 @@
 }
 
 .container-upload-text {
-    margin-bottom: 5px;
-}
-
-.container-upload-text {
-    margin-bottom: 5px;
-}
-
-.container-upload-text {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .mit-field {
-    margin-left: 25px;
-    margin-top: 2px;
-    position: relative;
-    display: grid;
-    width: 250px;
-    grid-template-columns: 202px 120px;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.mit-label {
+    /* This ensures child elements are pushed apart */
+    width: 330px;
+    margin-bottom: 7px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     text-align: left;
 }
 
-.upload-button {
+.mit-label {
+    color: #333;
+    font-weight: 600;
+    flex-grow: 1;
+    /* This will make sure the label takes up as much space as it can */
+}
+
+.mit-slider-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 3;
+    /* This will make sure the slider and its value take up 3 times the space as the label */
+}
+
+.mit-slider {
+    cursor: pointer;
+    appearance: none;
+    max-width: 150px;
+    height: 4px;
+    border-radius: 2px;
+    background: #d3d3d3;
+    outline: none;
+    padding: 0;
+    margin-right: 5px;
+    /* Changed from margin: 0 5px to align the slider to the right */
+}
+
+.mit-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #4A90E2;
+    cursor: pointer;
+}
+
+.mit-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #4A90E2;
+    cursor: pointer;
+}
+
+.mit-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    border-radius: 2px;
+    background: #d3d3d3;
+}
+
+.mit-slider::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    border-radius: 2px;
+    background: #d3d3d3;
+}
+
+.mit-slider::-moz-range-progress {
+    background-color: #4A90E2;
+}
+
+.mit-value-display {
+    font-size: 14px;
+    color: #555;
+}
+
+.upload-button button[type="submit"] {
+
+    display: inline-block;
     margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    color: #080000;
+    text-decoration: none;
+    border-radius: 0px;
+    font-size: large;
+    border: 1px solid black;
+}
+
+.upload-button button[type="submit"]:hover {
+    color: lightgrey;
 }

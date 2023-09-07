@@ -106,9 +106,6 @@ const ResultsPdf = () => {
             ) : (
                 <>
                     <div className="buttons-container">
-                        <Link to={`/chatbot/${pdfId}`}>
-                            <button type='submit' className='results-button'>Next</button>
-                        </Link>
                         <button type='submit' onClick={handleOpenPDF} className='results-button'>
                             Download
                         </button>

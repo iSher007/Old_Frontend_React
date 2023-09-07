@@ -160,13 +160,15 @@ const Results = () => {
                         <button onClick={handleOpenPDF} className='results-button'>
                             Download
                         </button>
+                        <Link to={`/report1/${pdfId}`}>
+                            <button className='results-button'>Back</button>
+                        </Link>
                     </div>
 
                     <div className="container">
                         <h1>Best Fit Career</h1>
                         <div className="domain-selection">
-                            <label>Select Domain: </label>
-                            <select value={selectedDomain} onChange={(e) => setSelectedDomain(e.target.value)}>
+                            <select type="filter" value={selectedDomain} onChange={(e) => setSelectedDomain(e.target.value)}>
                                 <option value=''>All Domains</option>
                                 {domains.map(domain => (
                                     <option key={domain} value={domain}>{domain}</option>

@@ -47,7 +47,7 @@ const StudentInfo = () => {
                 {studentData.pdf_comment &&
                     <a href={studentData.pdf_comment} download className="download-btn">Download Comments</a>
                 }
-                <button type="navigate" onClick={() => navigate(`/results/${pdfId}`)}>Go to Results</button>
+                <button type="navigate" onClick={() => navigate(`/report1/${pdfId}`)}>Go to Results</button>
             </div>
         </div>
     );

@@ -20,7 +20,7 @@ const Upload = () => {
     const [file, setFile] = useState(null);
     const [mbti, setMbti] = useState('');
     const [mitInput, setMitInput] = useState(
-        MIT_FIELDS.reduce((prev, field) => ({ ...prev, [field]: '' }), {})
+        MIT_FIELDS.reduce((prev, field) => ({ ...prev, [field]: 50 }), {})
     );
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -29,7 +29,7 @@ const Upload = () => {
 
     useEffect(() => {
         if (shouldRedirect && pdfId) {
-            navigate(`/results/${pdfId}`);
+            navigate(`/report1/${pdfId}`);
         }
     }, [shouldRedirect, pdfId, navigate]);
 
@@ -114,12 +114,14 @@ const Upload = () => {
                         <div className="mit-field" key={field}>
                             <label className="mit-label">{field}</label>
                             <input
-                                type="MIT"
-                                className="mit-input"
-                                placeholder={`Ex. 70%`}
+                                type="range"
+                                className="mit-slider"
+                                min="0"
+                                max="100"
                                 value={mitInput[field]}
                                 onChange={e => handleMitChange(e, field)}
                             />
+                            <div>{mitInput[field]}%</div>
                         </div>
                     ))
                 }
