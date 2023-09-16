@@ -1,0 +1,65 @@
+.App-header {
+    background-color: #f8f9fa;
+    padding: 2px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 65px;
+}
+
+.top-bar {
+    margin-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Add the button-group class to style the button group container */
+.button-group {
+    display: flex;
+    gap: 10px;
+    /* creates a gap between the buttons */
+}
+
+.logo-container {
+    display: relative;
+    align-items: center;
+    text-decoration: none;
+    font-size: 40px;
+    font-weight: bold;
+    background-image: linear-gradient(144deg, #bd31dc, #5B42F3 50%, #17d8e2);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.app-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.signin-btn,
+.signout-btn,
+.dashboard-btn,
+.chatbot-btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fafafa;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: larger;
+}
+
+.signin-btn:hover,
+.signout-btn:hover,
+.dashboard-btn:hover,
+.chatbot-btn:hover {
+    background-color: #75a8df;
+}
+
+.signin-btn:disabled,
+.signout-btn:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+}
