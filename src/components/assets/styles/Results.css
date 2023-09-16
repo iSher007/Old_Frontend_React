@@ -164,3 +164,8 @@
 .domain-selection select[type="filter"]:hover {
     color: lightgrey;
 }
+
+.results-table-div {
+    max-height: 400px;
+    overflow-y: auto;
+}

@@ -25,10 +25,10 @@ const Dashboard = () => {
             setStudents(validStudents);
 
             const uniqueSchools = [...new Set(validStudents.map(student => student.School))].sort();
-            setSchools(['All', ...uniqueSchools]);
+            setSchools(['Все ученики', ...uniqueSchools]);
 
             const uniqueGrades = [...new Set(validStudents.map(student => student.Grade))].sort();
-            setGrades(['All', ...uniqueGrades]);
+            setGrades(['Все классы', ...uniqueGrades]);
         };
 
         fetchData();
@@ -41,25 +41,35 @@ const Dashboard = () => {
     }).sort((a, b) => a.Name.localeCompare(b.Name)); // sort names alphabetically
 
     return (
-        <div className="dashboard">
-            <h1> Dashboard</h1>
-            <h3>Добавьте нового ученика</h3>
-            <button type="submit" onClick={() => navigate('/info')}>New Student</button>
-            <h3>Список прошедших систему</h3>
-            <div className="filters">
-                <select type="school" value={selectedSchool} onChange={e => setSelectedSchool(e.target.value)}>
-                    {schools.map(school => <option key={school} value={school}>{school}</option>)}
-                </select>
-                <select type="grade" value={selectedGrade} onChange={e => setSelectedGrade(e.target.value)}>
-                    {grades.map(grade => <option key={grade} value={grade}>{grade}</option>)}
-                </select>
+        <div className="row">
+            <div className="col-12 col-md-3 pb-3">
+                <div className="card card-custom h-100 m-2 p-3">
+                    <h3 className='mb-3'>Dashboard</h3>
+                    <button type="button" className='btn btn-primary' onClick={() => navigate('/info')}>Добавить ученика</button>
+                </div>
             </div>
-            <div className="student-list">
-                {filteredStudents.map(student => (
-                    <div key={student._id} onClick={() => navigate(`/student_info/${student._id}`)}>
-                        {student.Name}
+            <div className="col-12 col-md-4">
+                <div className="card card-custom m-2">
+                    <div className="card card-custom p-3">
+                        <h3>Список прошедших систему</h3>
+                        <div className="filters">
+                            <h5>Фильтры</h5>
+                            <select className='form-control my-2' value={selectedSchool} onChange={e => setSelectedSchool(e.target.value)}>
+                                {schools.map(school => <option key={school} value={school}>{school}</option>)}
+                            </select>
+                            <select className='form-control my-2' value={selectedGrade} onChange={e => setSelectedGrade(e.target.value)}>
+                                {grades.map(grade => <option key={grade} value={grade}>{grade}</option>)}
+                            </select>
+                        </div>
                     </div>
-                ))}
+                    <div className="student-list">
+                        {filteredStudents.map(student => (
+                            <div key={student._id} onClick={() => navigate(`/student_info/${student._id}`)}>
+                                {student.Name}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

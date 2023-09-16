@@ -36,9 +36,7 @@
 }
 
 .student-list {
-    border: 1px solid #ccc;
     max-height: 400px;
-    width: 400px;
     overflow-y: auto;
     text-align: center;
 }
@@ -56,4 +54,33 @@
 
 .student-list div:hover {
     background-color: #f7f7f7;
+}
+
+.card-custom {
+    box-shadow: 3px 3px 3px 3px rgba(174,174,174,0.5);
+    border: none !important;
+}
+
+
+.list-group-item span {
+    border: solid #222;
+    border-width: 0 1px 1px 0;
+    display: inline;
+    cursor: pointer;
+    padding: 3px;
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+}
+
+.list-group-item a.btn.collapsed span {
+    transform: rotate(40deg);
+    -webkit-transform: rotate(40deg);
+    transition: .3s transform ease-in-out;
+}
+
+.list-group-item a.btn span {
+    transform: rotate(-140deg);
+    -webkit-transform: rotate(-140deg);
+    transition: .3s transform ease-in-out;
 }

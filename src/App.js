@@ -75,83 +75,84 @@ const App = () => {
             <HeaderButtons />
           </div>
         </header>
+        <div className="container-fluid bg-grey">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/upload/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <Upload />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/report1/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <Report1 />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/results/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <Results />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/results_new/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <Results_new />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/results_pdf/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <ResultsPdf />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chatbot"
+              element={
+                <ProtectedRoute>
+                  <Chatbot />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student_info/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <StudentInfo />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/info"
+              element={
+                <ProtectedRoute>
+                  <Info />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/upload/:pdfId"
-            element={
-              <ProtectedRoute>
-                <Upload />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/report1/:pdfId"
-            element={
-              <ProtectedRoute>
-                <Report1 />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/results/:pdfId"
-            element={
-              <ProtectedRoute>
-                <Results />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/results_new/:pdfId"
-            element={
-              <ProtectedRoute>
-                <Results_new />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/results_pdf/:pdfId"
-            element={
-              <ProtectedRoute>
-                <ResultsPdf />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chatbot"
-            element={
-              <ProtectedRoute>
-                <Chatbot />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/student_info/:pdfId"
-            element={
-              <ProtectedRoute>
-                <StudentInfo />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/info"
-            element={
-              <ProtectedRoute>
-                <Info />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-
+        </div>
       </div>
     </Router>
   );

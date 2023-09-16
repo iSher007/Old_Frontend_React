@@ -1,4 +1,4 @@
-.container {
+/* .container {
     margin: 0 auto;
     text-align: center;
 }
@@ -27,64 +27,20 @@
 
 }
 
-.logo {
-    margin-top: 20px;
-    font-size: 200px;
-    margin-bottom: 0px;
-    border: 5px;
-    border-color: #080000;
-    font-weight: bold;
-    background-image: linear-gradient(144deg, #bd31dc, #5B42F3 50%, #17d8e2);
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    margin-right: 50px;
-}
-
-.logo-image {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    right: 2%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 .streamingtext-wrapper {
     max-width: 100%;
     padding-left: 8%;
     padding-right: 8%;
 }
 
-.streamingtext {
-    text-align: justify;
-    font-size: 29px;
-    font-weight: 600;
-    line-height: 1.5;
-    background-image: linear-gradient(144deg, #341063, #213a84 50%, #0e646c);
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    font-family: 'Helvetica';
-    margin-bottom: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: .15em solid #0e646c;
-    animation:
-        typing 5s steps(40, end),
-        blink-caret .5s step-end 2,
-        remove-caret 0.5s forwards;
-    animation-delay: 0s, 0s, 6s;
-}
 
 .navigation-buttons {
     display: flex;
     justify-content: center;
     margin-bottom: 0px;
-}
+} */
 
-.nav-btn {
+/* .nav-btn {
     align-items: center;
     background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #0d9aa4);
     border: 0;
@@ -367,18 +323,6 @@
     margin-top: 50px;
 }
 
-.Authorize {
-    font-size: 100px;
-    margin-bottom: 20px;
-    border: 5px;
-    border-color: #080000;
-    font-weight: bold;
-    background-image: linear-gradient(144deg, #29a678, #6936c7 50%, #ab12a9);
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    font-family: Arial, Helvetica, sans-serif;
-}
 
 .xarrow1 {
     z-index: 2;
@@ -434,7 +378,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 0px;
-}
+} */
 
 .nav-btn {
     align-items: center;
@@ -451,7 +395,6 @@
     line-height: 1em;
     max-width: 100%;
     min-width: 200px;
-    padding: 19px 24px;
     text-decoration: none;
     user-select: none;
     -webkit-user-select: none;
@@ -463,4 +406,67 @@
 
 .nav-btn:hover {
     color: lightgrey;
+}
+
+.logo {
+    margin-top: 20px;
+    font-size: 130px;
+    margin-bottom: 0px;
+    border: 5px;
+    border-color: #080000;
+    font-weight: bold;
+    background-image: linear-gradient(144deg, #bd31dc, #5B42F3 50%, #17d8e2);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    margin-right: 50px;
+}
+
+.logo-image {
+    width: 50px;
+    height: 50px;
+}
+
+.streamingtext {
+    text-align: justify;
+    font-size: 29px;
+    font-weight: 600;
+    line-height: 1.5;
+    background-image: linear-gradient(144deg, #341063, #213a84 50%, #0e646c);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-family: 'Helvetica';
+    margin-bottom: 20px;
+    overflow: hidden;
+    animation:
+        typing 5s steps(40, end),
+        blink-caret .5s step-end 2,
+        remove-caret 0.5s forwards;
+    animation-delay: 0s, 0s, 6s;
+}
+
+.Authorize {
+    font-size: 50px;
+    margin-bottom: 20px;
+    border: 5px;
+    border-color: #080000;
+    font-weight: bold;
+    background-image: linear-gradient(144deg, #29a678, #6936c7 50%, #ab12a9);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.description1 {
+    max-width: 100%;
+    text-align: justify;
+    font-size: 15.5px;
+    line-height: 1.5;
+    background-image: linear-gradient(144deg, #146358, #1d3478 50%, #6f0d76);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-family: Arial, Helvetica, sans-serif;
 }

@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Xwrapper } from "react-xarrows";
 import binoculars from './assets/images/binoculars-svgrepo-com.svg';
 import star from './assets/images/rating-svgrepo-com.svg';
-import starting from './assets/images/starting.gif';
+import starting from './assets/images/output-onlinegiftools.gif';
 import "./assets/styles/Home.css";
 import "./assets/styles/Resposive_mode.css";
-
+import Form from 'react-bootstrap/Form';
 
 
 const Home = () => {
@@ -55,35 +55,60 @@ const Home = () => {
   }, [redirect, navigate]);
   return (
     <div className="container">
-      <Xwrapper>
-        <div className="Home1">
-          <div className="logo-container" >
-            <h1 className="logo">TANU PRO</h1>
+      <div className="row">
+        <div className="col-12">
+          <h1 className="logo">TANU PRO <img src={binoculars} id="1" alt="binoculars" className="logo-image" /></h1>
+          
+        </div>
+        <div className="col-12">
+          <h2 className="streamingtext text-center"><span className=''>Окунитесь в мир, где ценят ваши мечты. Мы станем верным путеводителем в мире выбора карьерного пути!</span></h2>
+        </div>
+        <div className="col-12 d-flex justify-content-center">
+          <button className="btn btn-primary nav-btn py-2" onClick={() => Home3Ref.current.scrollIntoView({ behavior: 'smooth' })} >Let's start!</button>
+        </div>
+        <div className="col-12 col-md-6">
+          <img className="img-fluid" src={starting} alt="starting" />
+        </div>
+        <div className="col-12 col-md-6 d-flex flex-column justify-content-center description1">
+          <h2 className='font-weight-bold'>Более 600 уже существующих и новых карьерных путей</h2>
+          <h2 className='font-weight-bold'>Наши отчеты помогут раскрыть ваш скрытый потенциал</h2>
+          <h2 className='font-weight-bold'>Полный разбор наиболее подходящих профессий и отраслей</h2>
+        </div>
+          {/* <img src={star} id="2" alt="star" className="logo-image" /> */}
 
-            <img src={binoculars} id="1" alt="binoculars" className="logo-image" />
-
-          </div>
-          <div className="streamingtext-wrapper">
-            <h2 className="streamingtext"><span>Окунитесь в мир, где ценят ваши мечты. Мы станем верным путеводителем в мире выбора карьерного пути!</span></h2>
-          </div>
-          <div className="navigation-buttons">
-            <button className="nav-btn" onClick={() => Home3Ref.current.scrollIntoView({ behavior: 'smooth' })} >Let's start!</button>
-          </div>
-          <div className="logo-container">
-            <div className="sectionreverse1">
-
-              <img className="img1" src={starting} alt="starting" />
-              <div className="description1" >
-                <h2>Более 600 уже существующих и новых карьерных путей</h2>
-                <h2>Наши отчеты помогут раскрыть ваш скрытый потенциал</h2>
-                <h2>Полный разбор наиболее подходящих профессий и отраслей</h2>
+        <div className="col-12 col-md-4 offset-md-4 my-4">
+          <div className="card card-custom p-3">
+            <form onSubmit={submitHandler}>
+              <h1 id="6" className="Authorize">Let's Go</h1>
+              {errorMessage && <p className='text-danger'>{errorMessage}</p>}
+              <div class="form-row">
+                <div class="col my-3">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div class="col my-3">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    className="form-control"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div class="col mb-3 d-flex justify-content-center">
+                  <button type="submit" className="btn btn-primary nav-btn my-3 py-2">Sign in</button>
+                </div>
               </div>
-            </div>
-            <img src={star} id="2" alt="star" className="logo-image" />
+            </form>
           </div>
         </div>
 
-        <div className="Home3" ref={Home3Ref}>
+        {/* <div className="Home3" ref={Home3Ref}>
           <h1 id="6" className="Authorize">Let's Go</h1>
           {errorMessage && <p>{errorMessage}</p>}
           <form onSubmit={submitHandler}>
@@ -101,11 +126,9 @@ const Home = () => {
             />
             <button type="submit">Sign in</button>
           </form>
-        </div>
-
-      </Xwrapper>
-
-    </div >
+        </div> */}
+      </div>
+    </div>
   );
 };
 

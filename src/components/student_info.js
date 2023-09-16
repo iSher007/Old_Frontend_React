@@ -24,30 +24,39 @@ const StudentInfo = () => {
     }, [pdfId]);
 
     return (
-        <div className="student-info-container">
-            <div className="student-info-header">
-                <img
-                    src={studentData.photo_url || defaultPhoto}
-                    alt={studentData.Name || "Default student"}
-                    className="student-photo"
-                />                <div className="student-details">
-                    <p>School: {studentData.School}</p>
-                    <p>Name: {studentData.Name}</p>
-                    <p>Grade: {studentData.Grade}</p>
-                    <p>Date of Birth: {studentData.Date_of_birth}</p>
+        <div className="container">
+            <div className="row my-4">
+                <div className="col-12 col-md-4">
+                    <div className="card card-custom p-3 d-flex flex-column align-items-center">
+                        <div className="d-flex flex-column align-items-center student-details">
+                            <img
+                                src={studentData.photo_url || defaultPhoto}
+                                alt={studentData.Name || "Default student"}
+                                className="img-fluid student-photo"
+                            />
+                            <p>School: {studentData.School}</p>
+                            <p>Name: {studentData.Name}</p>
+                            <p>Grade: {studentData.Grade}</p>
+                            <p>Date of Birth: {studentData.Date_of_birth}</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className="student-info-footer">
-                {studentData.pdf_similarities &&
-                    <a href={studentData.pdf_similarities} download className="download-btn">Download Similarities</a>
-                }
-                {studentData.pdf_similarities_new &&
-                    <a href={studentData.pdf_similarities_new} download className="download-btn">Download New Similarities</a>
-                }
-                {studentData.pdf_comment &&
-                    <a href={studentData.pdf_comment} download className="download-btn">Download Comments</a>
-                }
-                <button type="navigate" onClick={() => navigate(`/report1/${pdfId}`)}>Go to Results</button>
+                <div className="col-12 col-md-8">
+                    <div className="card card-custom h-100 d-flex flex-column p-3 align-items-start">
+                        <div className="d-grid gap-2">
+                            {studentData.pdf_similarities &&
+                                <a href={studentData.pdf_similarities} download className="btn btn-primary btn-block">Download Similarities</a>
+                            }
+                            {studentData.pdf_similarities_new &&
+                                <a href={studentData.pdf_similarities_new} download className="btn btn-primary btn-block">Download New Similarities</a>
+                            }
+                            {studentData.pdf_comment &&
+                                <a href={studentData.pdf_comment} download className="btn btn-primary btn-block">Download Comments</a>
+                            }
+                            <button type="button" className='btn btn-secondary' onClick={() => navigate(`/report1/${pdfId}`)}>Go to Results</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

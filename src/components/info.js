@@ -97,69 +97,56 @@ const Info = () => {
 
 
     return (
-        <div className="container-upload">
-            <h1>Информация о вас</h1>
-            <form onSubmit={submitHandler}>
-                <div className="container-upload-text">
-                    <strong>Дата вашего рождения</strong>
+        <div className="container">
+            <div className="row">
+                <div className="col-12 col-md-4 offset-md-4 mt-4">
+                    <div className="card card-custom p-4">
+                        <h1 className='mb-4'>Информация о вас</h1>
+                        <form onSubmit={submitHandler}>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Дата вашего рождения</label>
+                                <input
+                                    className='form-control'
+                                    type="date"
+                                    placeholder="Gallup Test Date"
+                                    value={Date_of_birth}
+                                    onChange={handleDateOfBirthChange}
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Загрузите ваше фото</label>
+                                <input class="form-control" type="file" accept=".png" onChange={handlePhotoChange}/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Ваша школа</label>
+                                <input
+                                    className='form-control'
+                                    type="text"
+                                    placeholder="Ex. Тамос"
+                                    value={School}
+                                    onChange={handleSchoolChange}
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Ваш класс</label>
+                                <input
+                                    className='form-control'
+                                    type="text"
+                                    placeholder="Ex. 10 А"
+                                    value={Grade}
+                                    onChange={handleGradeChange}
+                                />
+                            </div>
+                            <div className="d-grid gap-2">
+                                <button type="button" className='btn btn-success btn-block' disabled={isLoading}>
+                                    {isLoading ? 'Uploading...' : 'Подтвердить'}
+                                </button>
+                            </div>
+                        </form>
+                        {errorMessage && <p>{errorMessage}</p>}
+                    </div>
                 </div>
-                <div>
-                    <input
-                        type="date"
-                        placeholder="Gallup Test Date"
-                        value={Date_of_birth}
-                        onChange={handleDateOfBirthChange}
-                    />
-                </div>
-                <div className="container-upload-text">
-                    <strong>Загрузите ваше фото</strong>
-                </div>
-                <div>
-                    <input type="file" accept=".png" onChange={handlePhotoChange} />
-                </div>
-
-                <div className="container-upload-text">
-                    <strong>Ваша школа</strong>
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Ex. Тамос"
-                        value={School}
-                        onChange={handleSchoolChange}
-                    />
-                </div>
-                <div className="container-upload-text">
-                    <strong>Ваше имя</strong>
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Ex. Асет Кабдиев"
-                        value={Name}
-                        onChange={handleNameChange}
-                    />
-                </div>
-
-                <div className="container-upload-text">
-                    <strong>Ваш класс</strong>
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Ex. 10 А"
-                        value={Grade}
-                        onChange={handleGradeChange}
-                    />
-                </div>
-
-                <div>
-                    <button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Uploading...' : 'Submit'}
-                    </button>
-                </div>
-            </form>
-            {errorMessage && <p>{errorMessage}</p>}
+            </div>
         </div>
     );
 };
