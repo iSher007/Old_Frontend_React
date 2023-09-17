@@ -18,7 +18,7 @@ const ResultsPdf = () => {
             const token = localStorage.getItem('access_token');
 
             axios
-                .get(`https://frontend-path.vercel.app/Gallup/${pdfId}/pdf_comments`, {
+                .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -39,7 +39,7 @@ const ResultsPdf = () => {
 
     const handleOpenPDF = () => {
         axios
-            .get(`https://frontend-path.vercel.app/Gallup/${pdfId}/pdf_comments_download`, {
+            .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_comments_download`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 },

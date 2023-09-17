@@ -14,7 +14,7 @@ const StudentInfo = () => {
     useEffect(() => {
         const fetchData = async () => {
             const token = localStorage.getItem('access_token');
-            const response = await axios.get(`https://frontend-path.vercel.app/Gallup/${pdfId}/by_id`, {
+            const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/by_id`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

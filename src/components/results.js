@@ -24,7 +24,7 @@ const Results = () => {
             setIsLoading(true);
             const token = localStorage.getItem('access_token');
             try {
-                const response = await axios.get(`https://frontend-path.vercel.app/Gallup/${pdfId}/pdf_similarity`, {
+                const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarity`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -45,7 +45,7 @@ const Results = () => {
         const token = localStorage.getItem('access_token');
 
         axios
-            .get(`https://frontend-path.vercel.app/Gallup/${pdfId}/pdf_similarities_download`, {
+            .get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf_similarities_download`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
