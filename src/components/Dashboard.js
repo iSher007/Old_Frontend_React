@@ -20,7 +20,7 @@ const Dashboard = () => {
                 }
             });
             const validStudents = response.data.filter(student =>
-                student.Name.trim() !== '' && student.pdf_similarities.trim() !== ''
+                student.Name.trim() !== '' && student.report1_url.trim() !== ''
             );
             setStudents(validStudents);
 
@@ -42,7 +42,7 @@ const Dashboard = () => {
 
     return (
         <div className="row justify-content-md-center">
-            <div className="col-12 col-md-3 pb-3">
+            <div className="col-12 col-md-3 pb-3 ">
                 <div className="card card-custom h-100 m-2 p-3">
                     <h3 className='mb-3'>Dashboard</h3>
                     <button type="button" className='btn btn-primary' onClick={() => navigate('/info')}>Добавить ученика</button>

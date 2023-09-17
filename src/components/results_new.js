@@ -137,7 +137,7 @@ const Results_new = () => {
                 <>
                     <div className="col-12 my-3 text-center">
                         <div className="card card-custom h-100 p-3">
-                            <h1>New Professions and Competencies</h1>
+                            <h1>Новые Профессии и Компетенции</h1>
                             <div className="col-12 mt-3">
                                 <Link to={`/results/${pdfId}`}>
                                     <button className='btn btn-info mx-2'>Back</button>
@@ -157,7 +157,7 @@ const Results_new = () => {
                         <div className="col-12 col-md-6 bg-grey row justify-content-start align-items-start">
                             <div className="col-12">
                                 <div className="card card-custom p-3">
-                                    <h3>Select the fields of interest</h3>
+                                    <h3>Выберите интересные вам сферы</h3>
                                     {firstHalfOptions.map(field => (
                                         <div className="form-check" key={field}>
                                             <input
@@ -186,11 +186,11 @@ const Results_new = () => {
                             </div>
                             <div className="col-12 my-3">
                                 <div className="card card-custom p-3">
-                                    <h3>Examine fields within the defined range</h3>
+                                    <h3>Распределение сфер деятельности в заданном интервале</h3>
                                     <div className='d-flex'>
-                                        <label>Min Place:</label>
+                                        <label>Min:</label>
                                         <input className='form-control mx-2' type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
-                                        <label>Max Place:</label>
+                                        <label>Max:</label>
                                         <input className='form-control ml-2' type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
                                     </div>
                                     <Bar data={chartData} />
@@ -208,12 +208,12 @@ const Results_new = () => {
                                                 <table className="results-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Place</th>
-                                                            <th>Field</th>
-                                                            <th>Profession</th>
-                                                            <th>Year of appearance</th>
-                                                            <th>Description</th>
-                                                            <th>Fit Percentage</th>
+                                                            <th>Место</th>
+                                                            <th>Сфера</th>
+                                                            <th>Подсфера</th>
+                                                            <th>Профессия</th>
+                                                            <th>Описание</th>
+                                                            <th>Процент соответствия</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

@@ -79,11 +79,11 @@ const ResultsPdf = () => {
     const renderSelectedContent = () => {
         switch (selectedOption) {
             case "content1":
-                return renderContent("REPORT 1: EXPLORE YOUR PERSONALITY", "REPORT 2: BEST CAREER FIELDS");
+                return renderContent("ОТЧЕТ 1:", "ОТЧЕТ 2:");
             case "content2":
-                return renderContent("REPORT 2: BEST CAREER FIELDS", "REPORT 3: TOP 5 PROFESSIONS");
+                return renderContent("ОТЧЕТ 2:", "ОТЧЕТ 3:");
             case "content3":
-                return renderContent("REPORT 3: TOP 5 PROFESSIONS");
+                return renderContent("ОТЧЕТ 3:");
             default:
                 return null;
         }
@@ -111,9 +111,9 @@ const ResultsPdf = () => {
                         <div className="col-12 my-3 text-center">
                             <div className="card card-custom h-100 p-3">
                                 <select value={selectedOption} onChange={handleSelectionChange} className="form-control">
-                                    <option value="content1">REPORT 1: EXPLORE YOUR PERSONALITY</option>
-                                    <option value="content2">REPORT 2: BEST CAREER FIELDS</option>
-                                    <option value="content3">REPORT 3: TOP 5 PROFESSIONS</option>
+                                    <option value="content1">Отчет 1: Полный портрет личности на основе комбинированного анализа тестов:</option>
+                                    <option value="content2">Отчет 2: Соответствие сильных сторон с выбранными отраслями</option>
+                                    <option value="content3">Отчет 3: Соответствие сильных сторон с выбранными профессиями</option>
                                 </select>
                                 <div className="col-12 mt-3">
                                     <Link to={`/results_new/${pdfId}`}>
@@ -131,7 +131,7 @@ const ResultsPdf = () => {
 
                         <div className="col-12 my-2">
                             <div className="card card-custom h-100 p-3 container-text">
-                                <h1 className='fw-bold'>Open AI analysis</h1>
+                                <h1 className='fw-bold'>ВЕКТОР РАЗВИТИЯ ПО РЕЗУЛЬТАТАМ ТЕСТОВ </h1>
                                 {isLoading ? (
                                     <p className=''>Loading...</p>
                                 ) : (
