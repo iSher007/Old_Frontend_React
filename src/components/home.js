@@ -22,7 +22,7 @@ const Home = () => {
     data.append('username', email);
     data.append('password', password);
 
-    axios.post('http://localhost:8000/auth/users/tokens', data)
+    axios.post('https://frontend-path.vercel.app/auth/users/tokens', data)
       .then((response) => {
         const { access_token } = response.data;
         localStorage.setItem('access_token', access_token);

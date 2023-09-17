@@ -21,7 +21,7 @@ const Info = () => {
         const fetchUserData = async () => {
             const token = localStorage.getItem('access_token');
             try {
-                const response = await axios.get('http://localhost:8000/auth/users/me', {
+                const response = await axios.get('https://frontend-path.vercel.app/auth/users/me', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -76,7 +76,7 @@ const Info = () => {
         const token = localStorage.getItem('access_token');
 
         try {
-            const response = await axios.post('http://localhost:8000/Gallup/info', formData, {
+            const response = await axios.post('https://frontend-path.vercel.app/Gallup/info', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'

@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             const token = localStorage.getItem('access_token');
-            const response = await axios.get('http://localhost:8000/Gallup/all', {
+            const response = await axios.get('https://frontend-path.vercel.app/Gallup/all', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

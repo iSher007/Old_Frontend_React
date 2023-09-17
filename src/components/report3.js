@@ -12,7 +12,7 @@ const Report3 = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/Gallup/${pdfId}/report1`, {
+        axios.get(`https://frontend-path.vercel.app/Gallup/${pdfId}/report3`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -30,7 +30,7 @@ const Report3 = () => {
     return (<div className="results-container">
         <div className="report1-container">
             {isLoading ? (
-                <div className="loader-container">
+                <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
                     <h1>Unlock Your Potential with Personalized Insights</h1>
                     <ul className="content-list">
                         <li><strong>REPORT 1: YOUR PERSONALITY</strong> - Pesronality analysis based on CliftonStrengths, MBTI, and Multiple Intelligences </li>
