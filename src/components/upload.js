@@ -52,7 +52,7 @@ const Upload = () => {
 
         const token = localStorage.getItem('access_token');
 
-        axios.post(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/pdf`, formData, {
+        axios.post(`http://localhost:8000/Gallup/${pdfId}/pdf`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data'

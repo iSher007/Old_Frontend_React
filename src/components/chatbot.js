@@ -12,7 +12,7 @@ const Chatbot = () => {
     const sendMessage = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/pdf_bot`, {
+            const response = await axios.get(`http://localhost:8000/Gallup/pdf_bot`, {
                 params: {
                     bot_question: message,
                 },

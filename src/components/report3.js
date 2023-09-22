@@ -12,7 +12,7 @@ const Report3 = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/report3`, {
+        axios.get(`http://localhost:8000/Gallup/${pdfId}/report3`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -44,16 +44,23 @@ const Report3 = () => {
             ) : (
 
 
-                <div>
-                    {pdfLoaded ? null : <p>Loading PDF...</p>}
-                    <object
-                        data={gallupUrl}
-                        type="application/pdf"
-                        width="100%"
-                        height="820px"
-                        onLoad={() => setPdfLoaded(true)}>
-                        <p>If the PDF does not load, you can <a href={gallupUrl} target="_blank" rel="noopener noreferrer">click here to download it</a>.</p>
-                    </object>
+                <div >
+                    {pdfLoaded ? null : <p>Загружаем отчет...</p>}
+                    <div >
+                        <object
+                            data={gallupUrl}
+                            type="application/pdf"
+                            width="100%"
+                            height="820px"
+                            onLoad={() => setPdfLoaded(true)}>
+                            <p>Для получения отчета:</p>
+                            <p>1. Можете перезагрузить страницу через 3-4 минуты</p>
+                            <p>2. Через 3-4 минуты можете нажать на эту ссылку <a href={gallupUrl} target="_blank" rel="noopener noreferrer"> что бы загрузить отчет</a>.</p>
+                            <p>3. Так же можно будет скачать отчет в профиле ученика</p>
+                            <p>4. Если через 7 минут ни один способ не сработал, проверьте загруженные файлы и загрузите профиль ученика заново.</p>
+                            <p>Если проблема останется нерешенной, пожалуйста, обратитесь к администратору, предоставив полное описание проблемы.</p>
+                        </object>
+                    </div>
                 </div>
             )}
             <div className="buttons-container" >
@@ -65,7 +72,7 @@ const Report3 = () => {
                 </Link>
             </div>
         </div>
-    </div>
+    </div >
     );
 };
 
