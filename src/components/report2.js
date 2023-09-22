@@ -12,7 +12,7 @@ const Report2 = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/Gallup/${pdfId}/report2`, {
+        axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/report2`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
