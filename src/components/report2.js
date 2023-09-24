@@ -11,6 +11,7 @@ const Report2 = () => {
     const [gallupUrl, setGallupUrl] = useState('');
     const token = localStorage.getItem('access_token');
 
+
     useEffect(() => {
         axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/report2`, {
             headers: {
@@ -18,7 +19,8 @@ const Report2 = () => {
             },
         })
             .then((response) => {
-                setGallupUrl(response.data);
+                // Append a timestamp to the URL as a query parameter
+                setGallupUrl(`${response.data}?timestamp=${new Date().getTime()}`);
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -26,6 +28,24 @@ const Report2 = () => {
                 setIsLoading(false);
             });
     }, [pdfId, token]);
+
+    const onRegenerateClick = () => {
+        setIsLoading(true);  // Show the loader while regenerating
+        axios.get(`https://fastapi-production-fffa.up.railway.app/Gallup/${pdfId}/report2?regenerate=true`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                // Append a timestamp to the URL as a query parameter
+                setGallupUrl(`${response.data}?timestamp=${new Date().getTime()}`);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error('Error regenerating report:', error);
+                setIsLoading(false);
+            });
+    }
 
     return (<div className="results-container">
         <div className="report1-container">
@@ -70,6 +90,9 @@ const Report2 = () => {
                 <Link to={`/report1/${pdfId}`}>
                     <button className='btn btn-info mx-2' style={{ marginTop: '10px' }}>Back</button>
                 </Link>
+            </div>
+            <div className="buttons-container-left" >
+                <button onClick={onRegenerateClick} className='btn btn-danger' style={{ marginTop: '10px', left: '0' }}>Regenerate</button>
             </div>
         </div>
     </div>
