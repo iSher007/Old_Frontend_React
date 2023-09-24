@@ -119,7 +119,7 @@ const Upload = () => {
                                         <label className="col-sm-7 col-form-label mit-label text-start">{field}</label>
                                         <div className="col-sm-5">
                                             <input
-                                                type="text"
+                                                type="number"
                                                 pattern="\d+%?"
                                                 title="Please enter a valid number or percentage"
                                                 className="form-control mit-input"
