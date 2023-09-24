@@ -119,8 +119,8 @@ const Upload = () => {
                                         <label className="col-sm-7 col-form-label mit-label text-start">{field}</label>
                                         <div className="col-sm-5">
                                             <input
-                                                type="number"
-                                                pattern="\d*"
+                                                type="text"
+                                                onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                                                 className="form-control mit-input"
                                                 placeholder={`Ex. 70`}
                                                 value={mitInput[field]}
