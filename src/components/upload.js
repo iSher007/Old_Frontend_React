@@ -120,13 +120,13 @@ const Upload = () => {
                                         <div className="col-sm-5">
                                             <input
                                                 type="number"
-                                                pattern="\d+%?"
-                                                title="Please enter a valid number or percentage"
+                                                pattern="\d*"
                                                 className="form-control mit-input"
-                                                placeholder={`Ex. 70%`}
+                                                placeholder={`Ex. 70`}
                                                 value={mitInput[field]}
                                                 onChange={e => handleMitChange(e, field)}
                                             />
+
                                         </div>
                                     </div>
                                 ))
