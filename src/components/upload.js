@@ -80,7 +80,8 @@ const Upload = () => {
     };
 
     const handleMitChange = (e, field) => {
-        setMitInput(prev => ({ ...prev, [field]: e.target.value }));
+        const value = e.target.value.replace(/\D/g, ''); // Replace non-digit characters with empty string
+        setMitInput(prev => ({ ...prev, [field]: value }));
     };
 
     return (
@@ -119,14 +120,12 @@ const Upload = () => {
                                         <label className="col-sm-7 col-form-label mit-label text-start">{field}</label>
                                         <div className="col-sm-5">
                                             <input
-                                                inputmode="numeric"
-                                                oninput="this.value = this.value.replace(/\D+/g, '')"
+                                                type="text" // keep as text, as the user might input characters initially
                                                 className="form-control mit-input"
-                                                placeholder={`Ex. 70`}
+                                                placeholder={`Ex. 70%`}
                                                 value={mitInput[field]}
                                                 onChange={e => handleMitChange(e, field)}
                                             />
-
                                         </div>
                                     </div>
                                 ))
