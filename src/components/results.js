@@ -141,17 +141,18 @@ const Results = () => {
             {isLoading ? (
                 <div className="col-12 row pb-3">
                     <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
-                        <h1>What Can You Discover Here?</h1>
+                        <h1>Отчет По Профессиям</h1>
                         <ul className="content-list">
-                            <li><strong>PROFESSIONAL DISCOVERY:</strong> - Explore an extensive list of professions tailored to your aptitude.</li>
-                            <li><strong>DEEP DIVE:</strong> - Open the links in the description to delve into each profession's details.</li>
-                            <li><strong>CUSTOMIZED VIEW:</strong> - Select fields of personal interest for a customized viewing experience.</li>
-                            <li><strong>RANKING INSIGHT:</strong> - Utilize our top-chart to identify the quantity of fields within a range of rankings.</li>
+                            <li><strong>ОТКРОЙ СВОЮ ПРОФЕССИЮ:</strong> - Изучите множество профессий, подходящих к вашим талантам.</li>
+                            <li><strong>ПОГРУЖЕНИЕ В ДЕТАЛИ:</strong> - Переходите по ссылкам в описании, чтобы углубиться в детали каждой профессии.</li>
+                            <li><strong>ПЕРСОНАЛИЗИРОВАННЫЙ ПРОСМОТР:</strong> - Выберите интересующие вас направления для индивидуального просмотра.</li>
+                            <li><strong>ИНФОРМАЦИЯ О СФЕРАХ:</strong> - Воспользуйтесь нашей рейтинговой таблицей, чтобы определить лучшие сферы для вас.</li>
                         </ul>
                         <div className="loader">
                             <BeatLoader color="#4A90E2" />
                         </div>
                     </div>
+
                 </div>
             ) : (
                 <>

@@ -121,12 +121,11 @@ const Results_new = () => {
             {isLoading ? (
                 <div className="col-12">
                     <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
-                        <h1>What's Emerging in Your Future?</h1>
+                        <h1>Атлас Новых Профессий</h1>
                         <ul className="content-list">
-                            <li><strong>FUTURE PROFESSIONS:</strong> Discover the latest professions on the horizon, based on your skills and aptitude.</li>
-                            <li><strong>EXPLORATION PATHWAYS:</strong> Explore new professions, understanding their requirements and the paths to excel in them.</li>
-                            <li><strong>PERSONALIZED DISCOVERY:</strong> Personalize your exploration by selecting fields of interest that capture your curiosity.</li>
-                            <li><strong>EMERGING TRENDS:</strong> Use our top-chart to discern the popularity of these emerging fields within ranking ranges.</li>
+                            <li><strong>ПРОФЕССИИ БУДУЩЕГО:</strong> Откройте для себя новейшие профессии, основанные на ваших навыках и способностях.</li>
+                            <li><strong>ИССЛЕДУЙ СВОЙ ПУТЬ:</strong> Изучайте новые профессии, понимайте их требования и пути, как в них добиться успеха.</li>
+                            <li><strong>ПЕРСОНАЛИЗИРУЙ ДАННЫЕ:</strong> Настраивайте свои профессии, выбирая только интересующие вас области.</li>
                         </ul>
                         <div className="loader">
                             <BeatLoader color="#4A90E2" />
@@ -137,7 +136,7 @@ const Results_new = () => {
                 <>
                     <div className="col-12 my-3 text-center">
                         <div className="card card-custom h-100 p-3">
-                            <h1>Новые Профессии и Компетенции</h1>
+                            <h1>Атлас Новых Профессий и Компетенций</h1>
                             <div className="col-12 mt-3">
                                 <Link to={`/results/${pdfId}`}>
                                     <button className='btn btn-info mx-2'>Back</button>

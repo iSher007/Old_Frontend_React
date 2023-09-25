@@ -49,11 +49,11 @@ const Report3 = () => {
         <div className="report1-container">
             {isLoading ? (
                 <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
-                    <h1>Unlock Your Potential with Personalized Insights</h1>
+                    <h1>Неочевидные Слабости Талантов</h1>
                     <ul className="content-list">
-                        <li><strong>REPORT 1: YOUR PERSONALITY</strong> - Pesronality analysis based on CliftonStrengths, MBTI, and Multiple Intelligences </li>
-                        <li><strong>REPORT 2: BEST CAREER FIELDS</strong> - Explore top career paths aligned with your unique strengths and interests </li>
-                        <li><strong>REPORT 3: TOP 5 PROFESSIONS</strong> - Analyze your chosen professions to understand their fit with your strengths </li>
+                        <li><strong>ДОМЕНЫ ЗАМЕДЛЯЮЩИЕ ПРОГРЕСС:</strong> - Ознакомьтесь с неочевидными слабостями и подводными камнями</li>
+                        <li><strong>ПЕРСОНАЛЬНЫЕ СТРАТЕГИИ:</strong> -  Получите советы и стратегии для обхода слабостей и раскрытия потенциала</li>
+                        <li><strong>ВЗАИМОДЕЙСТВИЕ С ОКРУЖАЮЩИМИ:</strong> - Влияние талантов на ваши отношения и взаимодействие с окружающими</li>
                     </ul>
                     <div className="loader">
                         <BeatLoader color="#4A90E2" />
