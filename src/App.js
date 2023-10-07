@@ -6,11 +6,18 @@ import Chatbot from './components/chatbot.js';
 import Home from './components/home.js';
 import Info from './components/info.js';
 import Report1 from './components/report1.js';
+import Report2 from './components/report2.js';
+import Report3 from './components/report3.js';
 import Results from './components/results.js';
-import Results_new from './components/results_new.js';
+import ResultsNew from './components/ResultsNew.js';
 import ResultsPdf from './components/results_pdf';
 import StudentInfo from './components/student_info.js';
 import Upload from './components/upload.js';
+
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const HeaderButtons = () => {
   const hasAccessToken = localStorage.getItem("access_token");
@@ -20,11 +27,11 @@ const HeaderButtons = () => {
   return (
     <>
       {(hasAccessToken || location.pathname === "/dashboard") && (
-        <div className="button-group">
-          <Link to="/dashboard" className="dashboard-btn">Dashboard</Link>
-          <Link to="/chatbot" className="chatbot-btn">Chatbot</Link>
-          <SignInOutButton />
-        </div>
+        <>
+          <Nav.Link className="mx-2" href="/dashboard">Dashboard</Nav.Link>
+          <Nav.Link className="mx-2" href="/chatbot">Chatbot</Nav.Link>
+          <Nav.Link className="mx-2" href=""><SignInOutButton /></Nav.Link>
+        </>
       )}
 
     </>
@@ -45,7 +52,7 @@ const SignInOutButton = () => {
   if (!hasAccessToken) return null; // No button rendered if user isn't authenticated
 
   return (
-    <button className='signout-btn' onClick={handleSignOutClick}>
+    <button className='btn btn-secondary' onClick={handleSignOutClick}>
       Sign Out
     </button>
   );
@@ -66,15 +73,42 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
-          <div className="top-bar">
-            <Link to="/" className="logo-container">
-              <div>TANU</div>
-            </Link>
-            <HeaderButtons />
+      <div>
+        {/* <div className="container-fluid">
+          <div className="row">
+            <div className="col-12 d-flex justify-content-between">
+              
+            </div>
           </div>
-        </header>
+        </div> */}
+        {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+            <a className="navbar-brand logo-container px-3" href="/">
+              TANU
+            </a>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav ms-auto">
+                <HeaderButtons />
+              </ul>
+            </div>
+          </div>
+        </nav> */}
+        <Navbar expand="lg" className="bg-light">
+          <Container fluid>
+            <Navbar.Brand className="navbar-brand logo-container ms-2" href="/">TANU</Navbar.Brand>
+            <Navbar.Toggle className="me-2" aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <HeaderButtons />
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        
         <div className="container-fluid bg-grey">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -95,6 +129,22 @@ const App = () => {
               }
             />
             <Route
+              path="/report2/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <Report2 />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/report3/:pdfId"
+              element={
+                <ProtectedRoute>
+                  <Report3 />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/results/:pdfId"
               element={
                 <ProtectedRoute>
@@ -103,10 +153,10 @@ const App = () => {
               }
             />
             <Route
-              path="/results_new/:pdfId"
+              path="/ResultsNew/:pdfId"
               element={
                 <ProtectedRoute>
-                  <Results_new />
+                  <ResultsNew />
                 </ProtectedRoute>
               }
             />

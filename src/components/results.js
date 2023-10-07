@@ -137,93 +137,96 @@ const Results = () => {
     const chartData = calculateChartData();
 
     return (
-            <div className="row">
-                {isLoading ? (
-                    <div className="col-12 row pb-3">
-                        <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
-                            <h1>What Can You Discover Here?</h1>
-                            <ul className="content-list">
-                                <li><strong>PROFESSIONAL DISCOVERY:</strong> - Explore an extensive list of professions tailored to your aptitude.</li>
-                                <li><strong>DEEP DIVE:</strong> - Open the links in the description to delve into each profession's details.</li>
-                                <li><strong>CUSTOMIZED VIEW:</strong> - Select fields of personal interest for a customized viewing experience.</li>
-                                <li><strong>RANKING INSIGHT:</strong> - Utilize our top-chart to identify the quantity of fields within a range of rankings.</li>
-                            </ul>
-                            <div className="loader">
-                                <BeatLoader color="#4A90E2" />
+        <div className="row m-0 p-0">
+            {isLoading ? (
+                <div className="col-12 row pb-3">
+                    <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
+                        <h1>Отчет По Профессиям</h1>
+                        <ul className="content-list">
+                            <li><strong>ОТКРОЙ СВОЮ ПРОФЕССИЮ:</strong> - Изучите множество профессий, подходящих к вашим талантам.</li>
+                            <li><strong>ПОГРУЖЕНИЕ В ДЕТАЛИ:</strong> - Переходите по ссылкам в описании, чтобы углубиться в детали каждой профессии.</li>
+                            <li><strong>ПЕРСОНАЛИЗИРОВАННЫЙ ПРОСМОТР:</strong> - Выберите интересующие вас направления для индивидуального просмотра.</li>
+                            <li><strong>ИНФОРМАЦИЯ О СФЕРАХ:</strong> - Воспользуйтесь нашей рейтинговой таблицей, чтобы определить лучшие сферы для вас.</li>
+                        </ul>
+                        <div className="loader">
+                            <BeatLoader color="#4A90E2" />
+                        </div>
+                    </div>
+
+                </div>
+            ) : (
+                <>
+                    <div className="col-12 text-center my-2 pb-3">
+                        <div className="card card-custom h-100 p-3">
+                            <h1 className='mb-3'>Наилучшие Карьерные Пути</h1>
+                            <select className='form-control' value={selectedDomain} onChange={(e) => setSelectedDomain(e.target.value)}>
+                                <option value=''>Все Домены</option>
+                                {domains.map(domain => (
+                                    <option key={domain} value={domain}>{domain}</option>
+                                ))}
+                            </select>
+                            <div className="col-12 mt-3">
+                                <Link to={`/report3/${pdfId}`}>
+                                    <button className='btn btn-info mx-2'>Back</button>
+                                </Link>
+
+                                <button onClick={handleOpenPDF} className='btn btn-success mx-2'>
+                                    Download
+                                </button>
+                                <Link to={`/ResultsNew/${pdfId}`}>
+                                    <button className='btn btn-primary me-2'>Next</button>
+                                </Link>
+
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <>
-                        <div className="col-12 text-center my-2 pb-3">
-                            <div className="card card-custom h-100 p-3">
-                                <h3 className='mb-3'>Best Fit Career</h3>
-                                <select className='form-control' value={selectedDomain} onChange={(e) => setSelectedDomain(e.target.value)}>
-                                    <option value=''>All Domains</option>
-                                    {domains.map(domain => (
-                                        <option key={domain} value={domain}>{domain}</option>
+                    <div className="col-12 row pb-3 m-0 px-0 pt-0">
+                        <div className="col-12 col-md-6 bg-grey row justify-content-start align-items-start">
+                            <div className="col-12">
+                                <div className="card card-custom p-3">
+                                    <h3>Выберите интересные вам сферы</h3>
+                                    {firstHalfOptions.map(field => (
+                                        <div className="form-check" key={field}>
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                id={`checkbox-${field}`}
+                                                checked={filterTerms.includes(field)}
+                                                onChange={() => handleFilterChange(field)}
+                                            />
+                                            <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
+                                        </div>
                                     ))}
-                                </select>
-                                <div className="col-12 mt-3">
-                                    <Link to={`/results_new/${pdfId}`}>
-                                        <button className='btn btn-primary me-2'>Next</button>
-                                    </Link>
-                                    <button onClick={handleOpenPDF} className='btn btn-success mx-2'>
-                                        Download
-                                    </button>
-                                    <Link to={`/report1/${pdfId}`}>
-                                        <button className='btn btn-info mx-2'>Back</button>
-                                    </Link>
+                                    {secondHalfOptions.map(field => (
+                                        <div className="form-check" key={field}>
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                id={`checkbox-${field}`}
+                                                checked={filterTerms.includes(field)}
+                                                onChange={() => handleFilterChange(field)}
+                                            />
+                                            <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="col-12 my-3">
+                                <div className="card card-custom p-3">
+                                    <h3>Распределение сфер деятельности в заданном интервале</h3>
+                                    <div className='d-flex'>
+                                        <label>Min:</label>
+                                        <input className='form-control mx-2' type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
+                                        <label>Max:</label>
+                                        <input className='form-control ms-2' type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
+                                    </div>
+                                    <Bar data={chartData} />
                                 </div>
                             </div>
                         </div>
-                        <div className="col-12 row pb-3">
-                            <div className="col-12 col-md-6 bg-grey row justify-content-start align-items-start">
-                                <div className="col-12">
-                                    <div className="card card-custom p-3">
-                                        <h3>Select the fields of interest</h3>
-                                        {firstHalfOptions.map(field => (
-                                            <div className="form-check" key={field}>
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id={`checkbox-${field}`}
-                                                    checked={filterTerms.includes(field)}
-                                                    onChange={() => handleFilterChange(field)}
-                                                />
-                                                <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
-                                            </div>
-                                        ))}
-                                        {secondHalfOptions.map(field => (
-                                            <div className="form-check" key={field}>
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id={`checkbox-${field}`}
-                                                    checked={filterTerms.includes(field)}
-                                                    onChange={() => handleFilterChange(field)}
-                                                />
-                                                <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="col-12 my-3">
-                                    <div className="card card-custom p-3">
-                                        <h3>Examine fields within the defined range</h3>
-                                        <div className='d-flex'>
-                                            <label>Min Place:</label>
-                                            <input className='form-control mx-2' type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
-                                            <label>Max Place:</label>
-                                            <input className='form-control ms-2' type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
-                                        </div>
-                                        <Bar data={chartData} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-md-6">
-                                <div className="card card-custom p-3">
-                                    <div className="table-responsive results-table-div">
+                        <div className="col-12 col-md-6">
+                            <div className="card card-custom p-3">
+                                <div className="table-responsive results-table-div">
                                     {isLoading ? (
                                         <p>Loading...</p>
                                     ) : (
@@ -232,12 +235,12 @@ const Results = () => {
                                                 <table className="results-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Place</th>
-                                                            <th>Field</th>
-                                                            <th>Subfield</th>
-                                                            <th>Profession</th>
-                                                            <th>Description</th>
-                                                            <th>Fit Percentage</th>
+                                                            <th>Место</th>
+                                                            <th>Сфера</th>
+                                                            <th>Подсфера</th>
+                                                            <th>Профессия</th>
+                                                            <th>Описание</th>
+                                                            <th>Процент соответствия</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -258,13 +261,13 @@ const Results = () => {
                                             )}
                                         </>
                                     )}
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </>
-                )}
-            </div>
+                    </div>
+                </>
+            )}
+        </div>
     );
 };
 

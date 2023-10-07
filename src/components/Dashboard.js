@@ -7,8 +7,8 @@ const Dashboard = () => {
     const [students, setStudents] = useState([]);
     const [schools, setSchools] = useState([]);
     const [grades, setGrades] = useState([]);
-    const [selectedSchool, setSelectedSchool] = useState('All');
-    const [selectedGrade, setSelectedGrade] = useState('All');
+    const [selectedSchool, setSelectedSchool] = useState('Все школы');
+    const [selectedGrade, setSelectedGrade] = useState('Все классы');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,12 +20,12 @@ const Dashboard = () => {
                 }
             });
             const validStudents = response.data.filter(student =>
-                student.Name.trim() !== '' && student.pdf_similarities.trim() !== ''
+                student.Name.trim() !== '' && student.report1_url.trim() !== ''
             );
             setStudents(validStudents);
 
             const uniqueSchools = [...new Set(validStudents.map(student => student.School))].sort();
-            setSchools(['Все ученики', ...uniqueSchools]);
+            setSchools(['Все школы', ...uniqueSchools]);
 
             const uniqueGrades = [...new Set(validStudents.map(student => student.Grade))].sort();
             setGrades(['Все классы', ...uniqueGrades]);
@@ -35,14 +35,14 @@ const Dashboard = () => {
     }, []);
 
     const filteredStudents = students.filter(student => {
-        let matchesSchool = selectedSchool === 'All' || student.School === selectedSchool;
-        let matchesGrade = selectedGrade === 'All' || student.Grade === selectedGrade;
+        let matchesSchool = selectedSchool === 'Все школы' || student.School === selectedSchool;
+        let matchesGrade = selectedGrade === 'Все классы' || student.Grade === selectedGrade;
         return matchesSchool && matchesGrade;
     }).sort((a, b) => a.Name.localeCompare(b.Name)); // sort names alphabetically
 
     return (
-        <div className="row">
-            <div className="col-12 col-md-3 pb-3">
+        <div className="row justify-content-md-center">
+            <div className="col-12 col-md-3 pb-3 ">
                 <div className="card card-custom h-100 m-2 p-3">
                     <h3 className='mb-3'>Dashboard</h3>
                     <button type="button" className='btn btn-primary' onClick={() => navigate('/info')}>Добавить ученика</button>

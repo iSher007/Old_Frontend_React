@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Xwrapper } from "react-xarrows";
-import binoculars from './assets/images/binoculars-svgrepo-com.svg';
-import star from './assets/images/rating-svgrepo-com.svg';
 import starting from './assets/images/output-onlinegiftools.gif';
 import "./assets/styles/Home.css";
 import "./assets/styles/Resposive_mode.css";
-import Form from 'react-bootstrap/Form';
 
 
 const Home = () => {
@@ -57,32 +53,30 @@ const Home = () => {
     <div className="container">
       <div className="row">
         <div className="col-12">
-          <h1 className="logo">TANU PRO <img src={binoculars} id="1" alt="binoculars" className="logo-image" /></h1>
-          
+          <h1 className="logo">TANU PRO </h1>
+
         </div>
         <div className="col-12">
-          <h2 className="streamingtext text-center"><span className=''>Окунитесь в мир, где ценят ваши мечты. Мы станем верным путеводителем в мире выбора карьерного пути!</span></h2>
+          <h2 className="streamingtext text-center"><span className=''>Лучшая профориентационная IT платформа в Караганде!</span></h2>
         </div>
-        <div className="col-12 d-flex justify-content-center">
-          <button className="btn btn-primary nav-btn py-2" onClick={() => Home3Ref.current.scrollIntoView({ behavior: 'smooth' })} >Let's start!</button>
-        </div>
-        <div className="col-12 col-md-6">
+
+        <div className="col-12">
           <img className="img-fluid" src={starting} alt="starting" />
         </div>
-        <div className="col-12 col-md-6 d-flex flex-column justify-content-center description1">
+        {/* <div className="col-12 col-md-6 d-flex flex-column justify-content-center description1">
           <h2 className='font-weight-bold'>Более 600 уже существующих и новых карьерных путей</h2>
           <h2 className='font-weight-bold'>Наши отчеты помогут раскрыть ваш скрытый потенциал</h2>
           <h2 className='font-weight-bold'>Полный разбор наиболее подходящих профессий и отраслей</h2>
-        </div>
-          {/* <img src={star} id="2" alt="star" className="logo-image" /> */}
+        </div> */}
+        {/* <img src={star} id="2" alt="star" className="logo-image" /> */}
 
         <div className="col-12 col-md-4 offset-md-4 my-4">
           <div className="card card-custom p-3">
             <form onSubmit={submitHandler}>
               <h1 id="6" className="Authorize">Let's Go</h1>
               {errorMessage && <p className='text-danger'>{errorMessage}</p>}
-              <div class="form-row">
-                <div class="col my-3">
+              <div className="form-row">
+                <div className="col my-3">
                   <input
                     type="email"
                     placeholder="Email"
@@ -91,7 +85,7 @@ const Home = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div class="col my-3">
+                <div className="col my-3">
                   <input
                     type="password"
                     placeholder="Password"
@@ -100,7 +94,7 @@ const Home = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div class="col mb-3 d-flex justify-content-center">
+                <div className="col mb-3 d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary nav-btn my-3 py-2">Sign in</button>
                 </div>
               </div>

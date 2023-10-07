@@ -8,6 +8,8 @@ const StudentInfo = () => {
     const [studentData, setStudentData] = useState({});
     const { pdfId } = useParams();
     const navigate = useNavigate();
+    const parsedMIT = studentData.MIT ? JSON.parse(studentData.MIT) : null;
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,26 +36,49 @@ const StudentInfo = () => {
                                 alt={studentData.Name || "Default student"}
                                 className="img-fluid student-photo"
                             />
-                            <p>School: {studentData.School}</p>
-                            <p>Name: {studentData.Name}</p>
-                            <p>Grade: {studentData.Grade}</p>
-                            <p>Date of Birth: {studentData.Date_of_birth}</p>
+                            <p>Школа: {studentData.School}</p>
+                            <p>Имя: {studentData.Name}</p>
+                            <p>Класс: {studentData.Grade}</p>
+                            <p>Дата рождения: {studentData.Date_of_birth}</p>
+                            <p>MBTI: {studentData.MBTI}</p>
                         </div>
                     </div>
                 </div>
-                <div className="col-12 col-md-8">
-                    <div className="card card-custom h-100 d-flex flex-column p-3 align-items-start">
+                <div className="col-12 col-md-4">
+                    <div className="card card-custom h-100 d-flex flex-column p-3 align-items-center">
                         <div className="d-grid gap-2">
+                            <button className="btn btn-secondary" onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
+                                Посмотреть MIT &nbsp;  {isDropdownVisible ? "▲" : "▼"}
+                            </button>
+                            {isDropdownVisible && parsedMIT && (
+                                <div className="mit-dropdown-content">
+                                    {Object.entries(parsedMIT).map(([key, value]) => (
+                                        <p key={key}>{key}: {value}</p>
+                                    ))}
+                                </div>
+                            )}
+                            {studentData.gallup_url &&
+                                <a href={studentData.gallup_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">Посмотреть Gallup</a>
+                            }
+                            {studentData.report1_url &&
+                                <a href={studentData.report1_url} download className="btn btn-primary btn-block">Загрузить Отчет 1</a>
+                            }
+                            {studentData.report2_url &&
+                                <a href={studentData.report2_url} download className="btn btn-primary btn-block">Загрузить Отчет 2</a>
+                            }
+                            {studentData.report3_url &&
+                                <a href={studentData.report3_url} download className="btn btn-primary btn-block">Загрузить Отчет 3</a>
+                            }
                             {studentData.pdf_similarities &&
-                                <a href={studentData.pdf_similarities} download className="btn btn-primary btn-block">Download Similarities</a>
+                                <a href={studentData.pdf_similarities} download className="btn btn-primary btn-block">Загрузить Профессии 1</a>
                             }
                             {studentData.pdf_similarities_new &&
-                                <a href={studentData.pdf_similarities_new} download className="btn btn-primary btn-block">Download New Similarities</a>
+                                <a href={studentData.pdf_similarities_new} download className="btn btn-primary btn-block">Загрузить Профессии 2</a>
                             }
                             {studentData.pdf_comment &&
-                                <a href={studentData.pdf_comment} download className="btn btn-primary btn-block">Download Comments</a>
+                                <a href={studentData.pdf_comment} download className="btn btn-primary btn-block">Загрузить Отчет 4</a>
                             }
-                            <button type="button" className='btn btn-secondary' onClick={() => navigate(`/report1/${pdfId}`)}>Go to Results</button>
+                            <button type="button" className='btn btn-secondary' onClick={() => navigate(`/report1/${pdfId}`)}>Перейти к результатам</button>
                         </div>
                     </div>
                 </div>

@@ -4,15 +4,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import "./assets/styles/Upload.css";
 
 const MIT_FIELDS = [
-    'Linguistic',
-    'Logical–mathematical',
-    'Musical',
-    'Bodily–kinesthetic',
-    'Spatial',
-    'Interpersonal',
-    'Intra–personal',
-    'Naturalistic',
-    'Existential'
+    'Лингвистический',
+    'Логико-математический',
+    'Музыкальный',
+    'Кинестетический',
+    'Пространственный',
+    'Межличностный',
+    'Внутриличностный',
+    'Натуралистический',
+    'Экзистенциальный'
 ];
 
 const Upload = () => {
@@ -20,7 +20,7 @@ const Upload = () => {
     const [file, setFile] = useState(null);
     const [mbti, setMbti] = useState('');
     const [mitInput, setMitInput] = useState(
-        MIT_FIELDS.reduce((prev, field) => ({ ...prev, [field]: 50 }), {})
+        MIT_FIELDS.reduce((prev, field) => ({ ...prev, [field]: '' }), {})
     );
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -80,60 +80,70 @@ const Upload = () => {
     };
 
     const handleMitChange = (e, field) => {
-        setMitInput(prev => ({ ...prev, [field]: e.target.value }));
+        const value = e.target.value.replace(/\D/g, ''); // Replace non-digit characters with empty string
+        setMitInput(prev => ({ ...prev, [field]: value }));
     };
 
     return (
-        <div className="container-upload">
-            <h1 className="container-upload-logo">Загрузите результаты ваших тестов</h1>
-            <h4>При необходимости щелкните на названиях тестов, чтобы перейти на их веб-сайты.</h4>
-            <form onSubmit={submitHandler}>
+        <div className="container">
+            <div className="row">
+                <div className="col-12 col-md-4 offset-md-4 mt-4">
+                    <div className="card card-custom p-4">
+                        <h2 className='mb-4'>Загрузите результаты ваших тестов</h2>
+                        <form onSubmit={submitHandler}>
 
-                <div className="container-upload-text">
-                    <a href="https://www.gallup.com/home.aspx" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}><strong>Загрузите ваш результат Gallup теста</strong></a>
+                            <div className="mb-3">
+                                <a href="https://www.gallup.com/home.aspx" target="_blank" for="formFile" class="form-label" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}> <strong>Загрузите ваш результат Gallup теста</strong></a>
+                            </div>
+                            <div>
+                                <input class="form-control" type="file" accept=".pdf" onChange={handleFileChange} style={{ marginBottom: '10px' }} />
+                            </div>
+                            <div className="mb-3">
+                                <a href="https://www.16personalities.com/free-personality-test" for="formFile" class="form-label" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} ><strong>Результаты индикатора Майерс-Бриггс</strong></a>
+                            </div>
+                            <div>
+                                <input
+                                    className='form-control'
+                                    type="text"
+                                    placeholder="Ex. INTJ-A"
+                                    value={mbti}
+                                    onChange={handleMbtiChange}
+                                    style={{ marginBottom: '10px' }}
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <a href="https://www.idrlabs.com/multiple-intelligences/test.php" target="_blank" for="formFile" class="form-label" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}> <strong>Результаты теста на тип интеллекта</strong></a>
+                            </div>
+                            {
+                                MIT_FIELDS.map(field => (
+                                    <div className="mb-3 row" key={field}>
+                                        <label className="col-sm-7 col-form-label mit-label text-start">{field}</label>
+                                        <div className="col-sm-5">
+                                            <input
+                                                type="text" // keep as text, as the user might input characters initially
+                                                className="form-control mit-input"
+                                                placeholder={`Ex. 70%`}
+                                                value={mitInput[field]}
+                                                onChange={e => handleMitChange(e, field)}
+                                            />
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                            <div className="d-grid gap-2">
+                                <button type="submit" className='btn btn-success btn-block' disabled={isLoading} style={{ marginTop: '10px' }}>
+                                    {isLoading ? 'Загрузка...' : 'Загрузить'}
+                                </button>
+                            </div>
+                        </form >
+                        {errorMessage && <p>{errorMessage}</p>}
+                    </div >
                 </div>
-                <div>
-                    <input type="file" accept=".pdf" onChange={handleFileChange} />
-                </div>
-                <div className="container-upload-text">
-                    <a href="https://www.16personalities.com/free-personality-test" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}><strong>Результаты индикатора Майерс-Бриггс</strong></a>
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Ex. INTJ-A"
-                        value={mbti}
-                        onChange={handleMbtiChange}
-                    />
-                </div>
-                <div className="container-upload-text">
-                    <a href="https://www.idrlabs.com/multiple-intelligences/test.php" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}> <strong>Результаты теста на тип интеллекта</strong></a>
-                </div>
-                {
-                    MIT_FIELDS.map(field => (
-                        <div className="mit-field" key={field}>
-                            <label className="mit-label">{field}</label>
-                            <input
-                                type="range"
-                                className="mit-slider"
-                                min="0"
-                                max="100"
-                                value={mitInput[field]}
-                                onChange={e => handleMitChange(e, field)}
-                            />
-                            <div>{mitInput[field]}%</div>
-                        </div>
-                    ))
-                }
-                <div className='upload-button'>
-                    <button type="submit" disabled={isLoading} style={{ marginTop: '10px' }}>
-                        {isLoading ? 'Загрузка...' : 'Загрузить'}
-                    </button>
-                </div>
-            </form >
-            {errorMessage && <p>{errorMessage}</p>}
-        </div >
+            </div>
+        </div>
+
     );
+
 };
 
 export default Upload;

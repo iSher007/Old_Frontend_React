@@ -9,12 +9,39 @@ const Info = () => {
     const [Name, setName] = useState('');
     const [Grade, setGrade] = useState('');
     const [Date_of_birth, setDateOfBirth] = useState('');
+    const [Google_drive, setGoogledrive] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [shouldRedirect, setShouldRedirect] = useState(false);
     const [pdfId, setPdfId] = useState('');
+    const [schools, setSchools] = useState([]); // New state for schools list
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem('access_token');
+            try {
+                const response = await axios.get('https://fastapi-production-fffa.up.railway.app/auth/users/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.data && response.data.schools) {
+                    setSchools(response.data.schools.split(', ').map(school => school.trim()));
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    useEffect(() => {
+        if (shouldRedirect && pdfId) {
+            navigate(`/upload/${pdfId}`);
+        }
+    }, [shouldRedirect, pdfId, navigate]);
     useEffect(() => {
         if (shouldRedirect && pdfId) {
             navigate(`/upload/${pdfId}`);
@@ -25,7 +52,7 @@ const Info = () => {
         e.preventDefault();
 
         // Removed the photo from this check since it's optional now
-        if (!School || !Name || !Grade || !Date_of_birth) {
+        if (!School || !Name || !Grade || !Date_of_birth || !Google_drive) {
             setErrorMessage('Please fill all the fields');
             return;
         }
@@ -43,6 +70,7 @@ const Info = () => {
         formData.append('Name', Name);
         formData.append('Grade', Grade);
         formData.append('Date_of_birth', Date_of_birth);
+        formData.append('Google_drive', Google_drive)
 
         const token = localStorage.getItem('access_token');
 
@@ -95,6 +123,10 @@ const Info = () => {
         setErrorMessage('');
     };
 
+    const handleGoogledriveChange = (e) => {
+        setGoogledrive(e.target.value);
+        setErrorMessage('');
+    };
 
     return (
         <div className="container">
@@ -115,18 +147,26 @@ const Info = () => {
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Загрузите ваше фото</label>
-                                <input class="form-control" type="file" accept=".png" onChange={handlePhotoChange}/>
+                                <input class="form-control" type="file" accept=".png" onChange={handlePhotoChange} />
                             </div>
                             <div class="mb-3">
+
+
                                 <label for="exampleInputEmail1" class="form-label">Ваша школа</label>
-                                <input
-                                    className='form-control'
-                                    type="text"
-                                    placeholder="Ex. Тамос"
-                                    value={School}
-                                    onChange={handleSchoolChange}
-                                />
+
+                                <select className='form-control' type="text" value={School} onChange={handleSchoolChange}>
+                                    <option value="">Выберите вашу школу</option>
+                                    {schools.map(school => (
+                                        <option key={school} value={school}>
+                                            {school}
+                                        </option>
+                                    ))}
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
+
+
+
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Ваш класс</label>
                                 <input
@@ -137,9 +177,30 @@ const Info = () => {
                                     onChange={handleGradeChange}
                                 />
                             </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Ваше Имя</label>
+                                <input
+                                    className='form-control'
+                                    type="text"
+                                    placeholder="Ex. Asset Kabdiyev"
+                                    value={Name}
+                                    onChange={handleNameChange}
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Ссылка на ваши файлы</label>
+                                <input
+                                    className='form-control'
+                                    type="text"
+                                    placeholder="Ex. google.com"
+                                    value={Google_drive}
+                                    onChange={handleGoogledriveChange}
+                                />
+                            </div>
+
                             <div className="d-grid gap-2">
-                                <button type="button" className='btn btn-success btn-block' disabled={isLoading}>
-                                    {isLoading ? 'Uploading...' : 'Подтвердить'}
+                                <button type="submit" className='btn btn-success btn-block' disabled={isLoading}>
+                                    {isLoading ? 'Загрузка...' : 'Подтвердить'}
                                 </button>
                             </div>
                         </form>

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Link, useParams } from 'react-router-dom';
 import { BeatLoader } from "react-spinners";
-import "./assets/styles/Results_new.css";
+import "./assets/styles/ResultsNew.css";
 
-const Results_new = () => {
+const ResultsNew = () => {
     const { pdfId } = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const [tableData, setTableData] = useState(null);
@@ -117,87 +117,88 @@ const Results_new = () => {
     const chartData = calculateChartData();
 
     return (
-            <div className="row">
-                {isLoading ? (
-                    <div className="col-12">
-                        <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
-                            <h1>What's Emerging in Your Future?</h1>
-                            <ul className="content-list">
-                                <li><strong>FUTURE PROFESSIONS:</strong> Discover the latest professions on the horizon, based on your skills and aptitude.</li>
-                                <li><strong>EXPLORATION PATHWAYS:</strong> Explore new professions, understanding their requirements and the paths to excel in them.</li>
-                                <li><strong>PERSONALIZED DISCOVERY:</strong> Personalize your exploration by selecting fields of interest that capture your curiosity.</li>
-                                <li><strong>EMERGING TRENDS:</strong> Use our top-chart to discern the popularity of these emerging fields within ranking ranges.</li>
-                            </ul>
-                            <div className="loader">
-                                <BeatLoader color="#4A90E2" />
+        <div className="row m-0 p-0">
+            {isLoading ? (
+                <div className="col-12">
+                    <div className="card card-custom h-100 p-3 d-flex flex-column align-items-center">
+                        <h1>Атлас Новых Профессий</h1>
+                        <ul className="content-list">
+                            <li><strong>ПРОФЕССИИ БУДУЩЕГО:</strong> Откройте для себя новейшие профессии, основанные на ваших навыках и способностях.</li>
+                            <li><strong>ИССЛЕДУЙ СВОЙ ПУТЬ:</strong> Изучайте новые профессии, понимайте их требования и пути, как в них добиться успеха.</li>
+                            <li><strong>ПЕРСОНАЛИЗИРУЙ ДАННЫЕ:</strong> Настраивайте свои профессии, выбирая только интересующие вас области.</li>
+                        </ul>
+                        <div className="loader">
+                            <BeatLoader color="#4A90E2" />
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <div className="col-12 my-3 text-center">
+                        <div className="card card-custom h-100 p-3">
+                            <h1>Атлас Новых Профессий и Компетенций</h1>
+                            <div className="col-12 mt-3">
+                                <Link to={`/results/${pdfId}`}>
+                                    <button className='btn btn-info mx-2'>Back</button>
+                                </Link>
+
+                                <button onClick={handleOpenPDF} className='btn btn-success mx-2'>
+                                    Download
+                                </button>
+                                <Link to={`/results_pdf/${pdfId}`}>
+                                    <button className='btn btn-primary me-2'>Next</button>
+                                </Link>
+
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <>
-                        <div className="col-12 my-3 text-center">
-                            <div className="card card-custom h-100 p-3">
-                                <h1>New Professions and Competencies</h1>
-                                <div className="col-12 mt-3">
-                                    <Link to={`/results_pdf/${pdfId}`}>
-                                        <button className='btn btn-primary me-2'>Next</button>
-                                    </Link>
-                                    <button onClick={handleOpenPDF} className='btn btn-success mx-2'>
-                                        Download
-                                    </button>
-                                    <Link to={`/results/${pdfId}`}>
-                                        <button className='btn btn-info mx-2'>Back</button>
-                                    </Link>
+                    <div className="col-12 row pb-3 pt-0 px-0 m-0">
+                        <div className="col-12 col-md-6 bg-grey row pb-3 pt-0 px-0 m-0 justify-content-start align-items-start">
+                            <div className="col-12">
+                                <div className="card card-custom p-3">
+                                    <h3>Выберите интересные вам сферы</h3>
+                                    {firstHalfOptions.map(field => (
+                                        <div className="form-check" key={field}>
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                id={`checkbox-${field}`}
+                                                checked={filterTerms.includes(field)}
+                                                onChange={() => handleFilterChange(field)}
+                                            />
+                                            <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
+                                        </div>
+                                    ))}
+                                    {secondHalfOptions.map(field => (
+                                        <div className="form-check" key={field}>
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                id={`checkbox-${field}`}
+                                                checked={filterTerms.includes(field)}
+                                                onChange={() => handleFilterChange(field)}
+                                            />
+                                            <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="col-12 my-3">
+                                <div className="card card-custom p-3">
+                                    <h3>Распределение сфер деятельности в заданном интервале</h3>
+                                    <div className='d-flex'>
+                                        <label>Min:</label>
+                                        <input className='form-control mx-2' type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
+                                        <label>Max:</label>
+                                        <input className='form-control ml-2' type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
+                                    </div>
+                                    <Bar data={chartData} />
                                 </div>
                             </div>
                         </div>
-                        <div className="col-12 row pb-3">
-                            <div className="col-12 col-md-6 bg-grey row justify-content-start align-items-start">
-                                <div className="col-12">
-                                    <div className="card card-custom p-3">
-                                        <h3>Select the fields of interest</h3>
-                                        {firstHalfOptions.map(field => (
-                                            <div className="form-check" key={field}>
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id={`checkbox-${field}`}
-                                                    checked={filterTerms.includes(field)}
-                                                    onChange={() => handleFilterChange(field)}
-                                                />
-                                                <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
-                                            </div>
-                                        ))}
-                                        {secondHalfOptions.map(field => (
-                                            <div className="form-check" key={field}>
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id={`checkbox-${field}`}
-                                                    checked={filterTerms.includes(field)}
-                                                    onChange={() => handleFilterChange(field)}
-                                                />
-                                                <label className='form-check-label' htmlFor={`checkbox-${field}`}>{field}</label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="col-12 my-3">
-                                    <div className="card card-custom p-3">
-                                        <h3>Examine fields within the defined range</h3>
-                                        <div className='d-flex'>
-                                            <label>Min Place:</label>
-                                            <input className='form-control mx-2' type="number" value={range.min} onChange={e => handleRangeChange('min', e.target.value)} />
-                                            <label>Max Place:</label>
-                                            <input className='form-control ml-2' type="number" value={range.max} onChange={e => handleRangeChange('max', e.target.value)} />
-                                        </div>
-                                        <Bar data={chartData} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-md-6">
-                                <div className="card card-custom p-3">
-                                    <div className="table-responsive results-table-div">
+                        <div className="col-12 col-md-6">
+                            <div className="card card-custom p-3">
+                                <div className="table-responsive results-table-div">
                                     {isLoading ? (
                                         <p>Loading...</p>
                                     ) : (
@@ -206,12 +207,12 @@ const Results_new = () => {
                                                 <table className="results-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Place</th>
-                                                            <th>Field</th>
-                                                            <th>Profession</th>
-                                                            <th>Year of appearance</th>
-                                                            <th>Description</th>
-                                                            <th>Fit Percentage</th>
+                                                            <th>Место</th>
+                                                            <th>Сфера</th>
+                                                            <th>Подсфера</th>
+                                                            <th>Профессия</th>
+                                                            <th>Описание</th>
+                                                            <th>Процент соответствия</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -232,16 +233,16 @@ const Results_new = () => {
                                             )}
                                         </>
                                     )}
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </>
-                )}
+                    </div>
+                </>
+            )}
         </div>
     );
 };
 
 
 
-export default Results_new;
+export default ResultsNew;
