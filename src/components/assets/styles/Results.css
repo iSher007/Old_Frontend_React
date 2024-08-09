@@ -1,0 +1,186 @@
+.results-container {
+    position: relative;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.content-list {
+    font-size: 1.1em;
+    text-align: justify;
+    list-style: inside;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+}
+
+.buttons-container {
+    margin-top: 0px !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.buttons-container-left {
+    margin-top: 0px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.results-button {
+    width: 130px;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #080000;
+    text-decoration: none;
+    align-items: left;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.results-main {
+    margin-top: 15px !important;
+    position: absolute;
+    left: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.filter-input {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    width: 850px;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    color: #080000;
+    text-decoration: none;
+    border-radius: 5%;
+    border: 0.5px solid rgb(233, 233, 233);
+}
+
+.checkbox-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.checkbox-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.results-main2 {
+    margin-top: 250px !important;
+    position: absolute;
+    left: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 800px;
+}
+
+.chart-container {
+    width: 800px;
+}
+
+.container-text1 {
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: left;
+    margin-right: 50%;
+    margin-left: 1%;
+    background-color: #fff;
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    box-sizing: border-box;
+    overflow: auto;
+    max-height: 80vh;
+    border: 0.5px solid rgb(233, 236, 236)
+}
+
+.results-main1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    justify-content: top;
+    width: 100;
+}
+
+.results-table {
+    align-items: center;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px
+}
+
+.results-table th,
+.results-table td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+}
+
+.domain-selection select[type="filter"] {
+
+    display: inline-block;
+    text-align: center;
+    margin-top: 2px;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    color: #080000;
+    text-decoration: none;
+    border-radius: 0px;
+    font-size: large;
+    border: 1px solid black;
+}
+
+.domain-selection select[type="filter"]:hover {
+    color: lightgrey;
+}
+
+.results-table-div {
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.custom-border .modal-content {
+    border: 2px solid rgb(25, 121, 185);
+    /* or any color you prefer */
+}

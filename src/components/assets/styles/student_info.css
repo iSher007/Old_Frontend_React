@@ -1,0 +1,68 @@
+.student-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.student-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.student-photo {
+    max-height: 150px;
+    border-radius: 50%;
+}
+
+.student-details p {
+    margin: 0 0 10px;
+    font-weight: bold;
+}
+
+.student-info-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.student-info-footer button[type="navigate"] {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #00b3ff;
+    width: 300px;
+    font-size: large;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.student-info-footer button[type="navigate"]:hover {
+    background-color: #006eb3;
+}
+
+.download-btn {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    width: 250px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
+}
